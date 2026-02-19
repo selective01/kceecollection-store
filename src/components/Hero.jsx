@@ -21,7 +21,7 @@ export default function Hero() {
           </h2>
           <p className="hero-tagline">Wear your story. Command your space.</p>
 
-          <Link to="/shop" className="hero-btn">Shop Now</Link>
+          <a href="#shop" className="hero-btn">Shop Now</a>
         </div>
       </div>
 

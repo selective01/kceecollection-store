@@ -77,7 +77,7 @@
 .hero-overlay h1 {
   font-size: 48px;
   font-family: 'Cinzel Decorative', serif;
-  color: var(--Goldenrod);
+  color: var(--white-color);
 }
 
 .hero-overlay h2 {
@@ -110,7 +110,7 @@
   font-weight: 700;
   font-size: 1.1rem;
   border: 2px solid var(--design-color);
-  border-radius: 10px;
+  border-radius: 4px;
   text-decoration: none;
   transition: all 0.3s ease;
 }
@@ -179,6 +179,9 @@
   .hero-left {
     padding: 0.5rem;
   }
+  .hero-overlay {
+    top: 80px;
+  }
   .hero-overlay h1 {
     font-size: 32px;
   }
@@ -186,7 +189,9 @@
     font-size: 14px;
   }
   .hero-btn {
-    padding: 0.6rem 1.5rem;
-    font-size: 0.9rem;
-  }
+  margin-top: 1.7rem;
+  padding: 0.8rem 2rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
 }
