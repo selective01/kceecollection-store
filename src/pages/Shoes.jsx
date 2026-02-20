@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../context/AuthContext";
 
@@ -114,7 +113,7 @@ const Shoes = () => {
           ))}
         </div>
       </section>
-      <Footer />
+      
     </>
   );
 };

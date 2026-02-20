@@ -3,8 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 
 import hoodie1 from "../assets/My_Collections/Hoodie/Hoodie (1).jpg";
 import hoodie2 from "../assets/My_Collections/Hoodie/Hoodie (2).jpg";
@@ -60,7 +59,7 @@ const Hoodies = () => {
 
   return (
     <>
-      <Navbar />
+
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Hoodies</h2>
@@ -125,7 +124,7 @@ const Hoodies = () => {
           ))}
         </div>
       </section>
-      <Footer />
+      
     </>
   );
 };

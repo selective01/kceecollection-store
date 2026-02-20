@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../context/AuthContext";
 
@@ -45,7 +44,7 @@ const DesignerShirts = () => {
 
   return (
     <>
-      <Navbar />
+
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Designer Shirts</h2>
@@ -83,7 +82,7 @@ const DesignerShirts = () => {
           ))}
         </div>
       </section>
-      <Footer />
+      
     </>
   );
 };

@@ -2,8 +2,7 @@ import React from "react";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../context/AuthContext";
 import { Link, useLocation } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 
 import watch1 from "../assets/My_Collections/Watches/Watch (1).jpg";
 import watch2 from "../assets/My_Collections/Watches/Watch (2).jpg";
@@ -78,7 +77,7 @@ const Watches = () => {
         </div>
 
       </section>
-      <Footer />
+      
     </>
   );
 };

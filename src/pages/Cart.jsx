@@ -1,9 +1,9 @@
 import React from "react";
 import { useCart } from "../hooks/useCart";
 import Toast from "../components/Toast";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import "../assets/css/cart.css";
+import Breadcrumb from "../components/Breadcrumb";
 
 const Cart = () => {
   const {
@@ -18,7 +18,7 @@ const Cart = () => {
 
   return (
     <>
-      <Navbar />
+
       <main className="cart-page">
         <Toast message={toastMessage} />
 
@@ -96,7 +96,7 @@ const Cart = () => {
           </>
         )}
       </main>
-      <Footer />
+      
     </>
   );
 };

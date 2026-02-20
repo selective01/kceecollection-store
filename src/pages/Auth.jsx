@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { useNavigate, useLocation } from "react-router-dom";
 import { auth } from "../firebase/firebaseConfig.js";
 import { OAuthProvider } from "firebase/auth";
@@ -85,7 +86,9 @@ function Auth() {
   };
 
   return (
-    <div className="auth-wrapper">
+    <>
+
+      <div className="auth-wrapper">
         <div className={`auth-box ${isSignup ? "signup-active" : ""}`}>
           {/* LOGIN PANEL */}
           <div className="panel panel-left">
@@ -313,6 +316,8 @@ function Auth() {
           </div>
         </div>
     </div>
+    
+    </>
   );
 }
 

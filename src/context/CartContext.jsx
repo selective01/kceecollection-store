@@ -10,8 +10,6 @@ export const CartProvider = ({ children, currentUser }) => {
 
   const [cart, setCart] = useState([]);
 
-  const [toastMessage, setToastMessage] = useState("");
-
   // Load cart when component mounts or when currentUser changes
   useEffect(() => {
     if (currentUser) {
@@ -34,10 +32,21 @@ export const CartProvider = ({ children, currentUser }) => {
     }
   }, [cart, currentUser]);
 
+  const [toast, setToast] = useState(null);
+
   const showToast = (message) => {
-    setToastMessage(message);
-    setTimeout(() => setToastMessage(""), 2000);
+    const id = Date.now();
+
+    setToast({
+      message,
+      id: Date.now()
+    });
+
+    setTimeout(() => {
+      setToast((current) => (current?.id === id ? null : current));
+    }, 2000);
   };
+
 
   const addToCart = (product) => {
     setCart((prev) => {
@@ -99,7 +108,8 @@ export const CartProvider = ({ children, currentUser }) => {
         total,
         cartCount,
         checkout,
-        toastMessage,
+        toast, // <-- pass the correct variable here
+        showToast, // optional if you want to trigger toast from other components
       }}
     >
       {children}

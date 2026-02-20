@@ -1,7 +1,6 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../context/AuthContext";
 
@@ -37,7 +36,7 @@ const Bags = () => {
 
   return (
     <>
-      <Navbar />
+
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Bags</h2>
@@ -78,7 +77,7 @@ const Bags = () => {
           ))}
         </div>
       </section>
-      <Footer />
+      
     </>
   );
 };
