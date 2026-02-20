@@ -47,7 +47,10 @@ export default function Testimonials() {
 
       <Swiper
         modules={[Navigation, Autoplay, Pagination]}
-        navigation
+        navigation={{
+          nextEl: ".custom-next",
+          prevEl: ".custom-prev",
+        }}
         autoplay={{ delay: 4000 }}
         loop={true}
         centeredSlides={true}
@@ -81,6 +84,9 @@ export default function Testimonials() {
           </SwiperSlide>
         ))}
       </Swiper>
+      {/* Custom Arrows */}
+      <div className="custom-prev">&#10094;</div>
+      <div className="custom-next">&#10095;</div>
   </section>
   );
 }

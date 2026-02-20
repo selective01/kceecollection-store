@@ -44,7 +44,7 @@ const Sleeveless = () => {
 
   return (
     <>
-      <Navbar />
+      
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Sleeveless</h2>

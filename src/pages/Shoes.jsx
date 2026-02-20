@@ -53,7 +53,7 @@ const Shoes = () => {
 
   return (
     <>
-      <Navbar />
+      
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Shoes</h2>

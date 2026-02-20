@@ -44,7 +44,7 @@ const Shorts = () => {
 
   return (
     <>
-      <Navbar />
+      
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Jean Shorts</h2>

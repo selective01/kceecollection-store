@@ -44,7 +44,7 @@ const Polo = () => {
 
   return (
     <>
-      <Navbar />
+      
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Polo</h2>

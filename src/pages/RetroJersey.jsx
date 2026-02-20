@@ -44,7 +44,7 @@ const RetroJersey = () => {
 
   return (
     <>
-      <Navbar />
+      
       <section className="premium-categories product-page">
         <div className="section-header"><h2>Retro Jersey</h2><p>Premium retro jerseys</p></div>
         <div className="categories-grid">{products.map((product) => (
