@@ -24,7 +24,7 @@ function Auth() {
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [UserName, setUserName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -187,14 +187,14 @@ function Auth() {
             <form onSubmit={handleSignup}>
               <input
                 type="text"
-                placeholder="Full Name"
+                placeholder="Username"
                 required
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                value={UserName}
+                onChange={(e) => setUserName(e.target.value)}
               />
               <input
                 type="email"
-                placeholder="Email"
+                placeholder="Email Address"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
