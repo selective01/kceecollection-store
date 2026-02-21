@@ -17,7 +17,7 @@ import sleevelessImg from "../assets/My_Collections/Sleeveless/Sleeveless (1).jp
 import jeansImg from "../assets/My_Collections/Jeans/Jean (1).jpg";
 import clubJerseyImg from "../assets/My_Collections/ClubJersey/ClubJersey (1).jpg";
 import perfumeImg from "../assets/My_Collections/Perfume/Perfume (1).jpg";
-import shortsImg from "../assets/My_Collections/JeanShorts/JeanShort (1).jpg";
+import shortsImg from "../assets/My_Collections/Shorts/Short (1).jpg";
 import WatchesImg from "../assets/My_Collections/Watches/Watch (1).jpg";
 import ShoesImg from "../assets/My_Collections/Shoes/Shoe (1).jpg";
 

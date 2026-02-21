@@ -103,12 +103,12 @@
 .hero-btn {
   display: inline-block;
   margin-top: 1.5rem;
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 3.5rem;
   background-color: var(--design-color);          
-  color: #fff;
+  color: var(--white-color);
   font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  font-size: 1.1rem;
+  font-weight: 600;
+  font-size: 1.3rem;
   border: 2px solid var(--design-color);
   border-radius: 4px;
   text-decoration: none;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../context/AuthContext";
 
@@ -35,10 +34,21 @@ const Jeans = () => {
     { id: "jeans-012", name: "Premium Jeans", price: 27777, image: jeans10},
   ];
 
-  const handleSizeSelect = (productId, size) => setSelectedSizes({ ...selectedSizes, [productId]: size });
+  const handleSizeSelect = (productId, size) => {
+    setSelectedSizes({ 
+      ...selectedSizes, 
+      [productId]: size, 
+    });
+  };
+
   const handleAddToCart = (product) => {
     const selectedSize = selectedSizes[product.id];
-    if (!selectedSize) { alert("Please select a size"); return; }
+
+    if (!selectedSize) { 
+      alert("Please select a size"); 
+      return; 
+    }
+
     addToCart({ ...product, size: selectedSize });
   };
 
@@ -73,7 +83,9 @@ const Jeans = () => {
                       className={`size-option-shoe ${
                         selectedSizes[product.id] === size ? "active" : ""
                       }`}
-                      onClick={() => handleSizeSelect(product.id, size)}
+                      onClick={() => 
+                        handleSizeSelect(product.id, size)
+                      }
                     >
                       {size}
                     </span>

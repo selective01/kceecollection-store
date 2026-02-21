@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
-
 
 import hoodie1 from "../assets/My_Collections/Hoodie/Hoodie (1).jpg";
 import hoodie2 from "../assets/My_Collections/Hoodie/Hoodie (2).jpg";

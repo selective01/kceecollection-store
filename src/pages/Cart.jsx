@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
 import Toast from "../components/Toast";
 
@@ -6,13 +6,14 @@ import "../assets/css/cart.css";
 import Breadcrumb from "../components/Breadcrumb";
 
 const Cart = () => {
+  const navigate = useNavigate();
+
   const {
     cart,
     removeFromCart,
     clearCart,
     updateQuantity,
     total,
-    checkout,
     toastMessage,
   } = useCart();
 
@@ -82,13 +83,14 @@ const Cart = () => {
               <p>Total: ₦{total.toLocaleString()}</p>
               <div className="cart-btn-actions">
                 <button
-                  onClick={checkout}
+                  onClick={() => navigate("/checkout")}
                   className="checkout-btn"
                   disabled={cart.length === 0}
                 >
                   Proceed to Checkout
                 </button>
-                <button onClick={clearCart} className="clear-cart-btn">
+                <button 
+                  onClick={clearCart} className="clear-cart-btn">
                   Clear Cart
                 </button>
               </div>

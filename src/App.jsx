@@ -8,10 +8,11 @@ import Footer from "./components/Footer";
 import Breadcrumb from "./components/Breadcrumb";
 
 import Home from "./pages/Home.jsx";
-import Cart from "./pages/Cart.jsx";
 import Auth from "./pages/Auth.jsx";
 import Bags from "./pages/Bags.jsx";
 import Caps from "./pages/Caps.jsx";
+import Cart from "./pages/Cart.jsx";
+import Checkout from "./pages/Checkout.jsx";
 import ClubJersey from "./pages/ClubJersey.jsx";
 import DesignerShirts from "./pages/DesignerShirts.jsx";
 import Hoodies from "./pages/Hoodies.jsx";
@@ -35,6 +36,8 @@ import "./assets/css/style.css";
 const breadcrumbPages = [
   "/bags",
   "/caps",
+  "/cart",
+  "/checkout",
   "/club-jersey",
   "/designer-shirts",
   "/hoodies",
@@ -51,7 +54,6 @@ const breadcrumbPages = [
   "/sneakers",
   "/t-shirts",
   "/watches",
-  "/cart",
 ];
 
 function Layout({ children }) {
@@ -82,6 +84,7 @@ function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/bags" element={<Bags />} />
         <Route path="/caps" element={<Caps />} />
         <Route path="/club-jersey" element={<ClubJersey />} />

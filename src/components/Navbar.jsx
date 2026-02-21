@@ -66,13 +66,6 @@ const Navbar = () => {
       </div>
 
       <nav className="menu-items">
-        <a href="#shop">
-          <span className="menu-icon">
-            <i className="fa-solid fa-shop"></i>
-          </span>
-          <span className="menu-text">Shop</span>
-        </a>
-
         <a href="#about">
           <span className="menu-icon">
             <i className="fa-regular fa-address-card"></i>

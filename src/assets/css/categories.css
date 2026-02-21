@@ -19,14 +19,14 @@
   --Goldenrod: #FFDF00;    
 }
 .premium-categories {
-  padding: 50px;
+  padding: 40px 50px;
   background: var(--white-color);
   margin: 50px;
   border-radius: 12px;
 }
 
 .product-page {
-  margin-top: 70px;
+  margin-top: 20px;
 }
 
 .categories-grid {
@@ -140,7 +140,8 @@
   border-color: var(--design-color);
 }
 
-.size-option.active {
+.size-option.active,
+.size-option-shoe.active {
   background: var(--black-color);
   color: var(--white-color);
 }

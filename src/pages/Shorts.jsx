@@ -4,35 +4,35 @@ import { useLocation, Link } from "react-router-dom";
 import { useCart } from "../hooks/useCart";
 import { useAuth } from "../context/AuthContext";
 
-import jeanshorts1 from "../assets/My_Collections/JeanShorts/JeanShort (1).jpg";
-import jeanshorts2 from "../assets/My_Collections/JeanShorts/JeanShort (2).jpg";
-import jeanshorts3 from "../assets/My_Collections/JeanShorts/JeanShort (3).jpg";
-import jeanshorts4 from "../assets/My_Collections/JeanShorts/JeanShort (4).jpg";
-import jeanshorts5 from "../assets/My_Collections/JeanShorts/JeanShort (5).jpg";
-import jeanshorts6 from "../assets/My_Collections/JeanShorts/JeanShort (6).jpg";
-import jeanshorts7 from "../assets/My_Collections/JeanShorts/JeanShort (7).jpg";
-import jeanshorts8 from "../assets/My_Collections/JeanShorts/JeanShort (8).jpg";
-import jeanshorts9 from "../assets/My_Collections/JeanShorts/JeanShort (9).jpg";
-import jeanshorts10 from "../assets/My_Collections/JeanShorts/JeanShort (10).jpg";
+import shorts1 from "../assets/My_Collections/Shorts/Short (1).jpg";
+import shorts2 from "../assets/My_Collections/Shorts/Short (2).jpg";
+import shorts3 from "../assets/My_Collections/Shorts/Short (3).jpg";
+import shorts4 from "../assets/My_Collections/Shorts/Short (4).jpg";
+import shorts5 from "../assets/My_Collections/Shorts/Short (5).jpg";
+import shorts6 from "../assets/My_Collections/Shorts/Short (6).jpg";
+import shorts7 from "../assets/My_Collections/Shorts/Short (7).jpg";
+import shorts8 from "../assets/My_Collections/Shorts/Short (8).jpg";
+import shorts9 from "../assets/My_Collections/Shorts/Short (9).jpg";
+import shorts10 from "../assets/My_Collections/Shorts/Short (10).jpg";
 
 const Shorts = () => {
   const { addToCart } = useCart();
   const { isLoggedIn } = useAuth();
   const location = useLocation();
   const [selectedSizes, setSelectedSizes] = useState({});
-  const sizes = [32, 33, 34, 36, 38, 40];
+  const sizes = ["S", "M", "L", "XL"];
 
   const products = [
-    { id: "jeanshorts-001", name: "Street Shorts", price: 12000, image: jeanshorts1 },
-    { id: "jeanshorts-002", name: "Street Shorts", price: 12000, image: jeanshorts2 },
-    { id: "jeanshorts-003", name: "Street Shorts", price: 12000, image: jeanshorts3 },
-    { id: "jeanshorts-004", name: "Street Shorts", price: 12000, image: jeanshorts4 },
-    { id: "jeanshorts-005", name: "Street Shorts", price: 12555, image: jeanshorts5 },
-    { id: "jeanshorts-006", name: "Street Shorts", price: 12555, image: jeanshorts6 },
-    { id: "jeanshorts-007", name: "Street Shorts", price: 12555, image: jeanshorts7 },
-    { id: "jeanshorts-008", name: "Street Shorts", price: 12555, image: jeanshorts8 },
-    { id: "jeanshorts-011", name: "Street Shorts", price: 12555, image: jeanshorts9 },
-    { id: "jeanshorts-012", name: "Street Shorts", price: 13333, image: jeanshorts10 },
+    { id: "shorts-001", name: "Street Shorts", price: 12000, image: shorts1 },
+    { id: "shorts-002", name: "Street Shorts", price: 12000, image: shorts2 },
+    { id: "shorts-003", name: "Street Shorts", price: 12000, image: shorts3 },
+    { id: "shorts-004", name: "Street Shorts", price: 12000, image: shorts4 },
+    { id: "shorts-005", name: "Street Shorts", price: 12555, image: shorts5 },
+    { id: "shorts-006", name: "Street Shorts", price: 12555, image: shorts6 },
+    { id: "shorts-007", name: "Street Shorts", price: 12555, image: shorts7 },
+    { id: "shorts-008", name: "Street Shorts", price: 12555, image: shorts8 },
+    { id: "shorts-009", name: "Street Shorts", price: 12555, image: shorts9 },
+    { id: "shorts-010", name: "Street Shorts", price: 13333, image: shorts10 },
   ];
 
   const handleSizeSelect = (productId, size) => setSelectedSizes({ ...selectedSizes, [productId]: size });
@@ -44,15 +44,16 @@ const Shorts = () => {
 
   return (
     <>
-      
       <section className="premium-categories product-page">
         <div className="section-header">
-          <h2>Jean Shorts</h2>
-          <p>Premium streetwear shorts</p>
+          <h2>Shorts</h2>
+          <p>Luxury streetwear shorts</p>
         </div>
+
         <div className="categories-grid">
           {products.map((product) => (
             <div key={product.id} className="category-card product-card">
+              
               <div className="image-wrapper">
                 <img
                   src={product.image}
@@ -63,17 +64,21 @@ const Shorts = () => {
 
               <div className="card-info">
                 <h3>{product.name}</h3>
-                <p className="price">₦{product.price.toLocaleString()}</p>
+                <p className="price">
+                  ₦{product.price.toLocaleString()}
+                </p>
 
-                {/* Shoe Size Selector */}
+                {/* Size Selector */}
                 <div className="size-selector">
                   {sizes.map((size) => (
                     <span
                       key={size}
-                      className={`size-option-shoe ${
+                      className={`size-option ${
                         selectedSizes[product.id] === size ? "active" : ""
                       }`}
-                      onClick={() => handleSizeSelect(product.id, size)}
+                      onClick={() =>
+                        handleSizeSelect(product.id, size)
+                      }
                     >
                       {size}
                     </span>
@@ -103,7 +108,6 @@ const Shorts = () => {
           ))}
         </div>
       </section>
-      
     </>
   );
 };
