@@ -47,6 +47,7 @@ const breadcrumbPages = [
   "/jean-shorts",
   "/joggers",
   "/perfume",
+  "/checkout",
   "/polo",
   "/retro-jersey",
   "/shoes",
