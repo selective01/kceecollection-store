@@ -6,6 +6,7 @@ import "../assets/css/auth.css";
 import logo from "../assets/My_Collections/Logo/Kceecollection_Logo2.jpeg";
 import {
   createUserWithEmailAndPassword,
+  updateProfile,
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
@@ -42,7 +43,13 @@ function Auth() {
       return;
     }
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      // set the display name for the created user
+      await updateProfile(userCredential.user, { displayName: fullName });
       const from = location.state?.from?.pathname || "/";
       navigate(from, { replace: true });
     } catch (error) {
@@ -115,7 +122,7 @@ function Auth() {
                   <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                 </button>
               </div>
-              <a href="#" className="forgot-password" onClick={handleForgotPassword}>Forgot Password?</a>
+              <button type="button" className="forgot-password" onClick={handleForgotPassword}>Forgot Password?</button>
               <button type="submit" className="login-btn">Login</button>
               <p className="login-link mobile-only">
                 Don't have an account?{" "}
