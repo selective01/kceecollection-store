@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 
 import retrojersey1 from "../assets/My_Collections/RetroJersey/RetroJersey (1).jpg";
 import retrojersey2 from "../assets/My_Collections/RetroJersey/RetroJersey (2).jpg";

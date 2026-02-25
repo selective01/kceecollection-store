@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 
 import tshirts1 from "../assets/My_Collections/Tshirts/Tshirt (1).jpg";
 import tshirts2 from "../assets/My_Collections/Tshirts/Tshirt (2).jpg";

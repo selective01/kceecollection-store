@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 import { Link, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";

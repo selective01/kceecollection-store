@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
 
 import sleeveless1 from "../assets/My_Collections/Sleeveless/Sleeveless (1).jpg";
 import sleeveless2 from "../assets/My_Collections/Sleeveless/Sleeveless (2).jpg";
