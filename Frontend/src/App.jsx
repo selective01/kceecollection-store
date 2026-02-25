@@ -9,6 +9,7 @@ import Breadcrumb from "./components/Breadcrumb";
 
 import Home from "./pages/Home.jsx";
 import Cart from "./pages/Cart.jsx";
+import Checkout from "./pages/Checkout.jsx";
 import Auth from "./pages/Auth.jsx";
 import Bags from "./pages/Bags.jsx";
 import Caps from "./pages/Caps.jsx";
@@ -85,6 +86,7 @@ function AppRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/bags" element={<Bags />} />
         <Route path="/caps" element={<Caps />} />
         <Route path="/club-jersey" element={<ClubJersey />} />
