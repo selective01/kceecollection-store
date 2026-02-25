@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+:root {
+  --white-color: #ffffff;
+  --black-color: #0b0b0b;
+  --design-color: #3A9D23;       
+  --design-active-color: #27632A;  
+  --background-color: #F5F5DC;    
+  --red-color: #dc3545;          
+  --figcaption-color: #333;        
+  --hero-small-screen: 30px;
+  --hero-large-screen: 48px;
+  --font-small-screen: 12px;
+  --font-large-screen: 16px;
+  --grid-column-small-screen: 1fr 1fr;
+  --grid-column-medium-screen: repeat(3, 1fr);
+  --grid-column-large-screen: repeat(4, 1fr);
+  --accent-primary: #3A9D23;  
+  --accent-soft: #A58C69;
+  --Goldenrod: #FFDF00;    
+}
+
+.breadcrumb-container {
+  padding: 10px 0;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.breadcrumb {
+  font-family: 'Playfair Display', serif;
+  font-size: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+.breadcrumb a:hover {
+  color: #3A9D23; /* your brand green */
+}
+
+.separator {
+  color: var(--accent-soft);
+  margin-right: 10px;
+}
+
+.current {
+  color: var(--design-color);
+  font-weight: 600;
+  padding-bottom: 2px;
+}

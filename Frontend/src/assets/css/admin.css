@@ -1,0 +1,48 @@
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  width: 240px;
+  background: #111;
+  color: white;
+  padding: 20px;
+}
+
+.admin-sidebar a {
+  display: block;
+  color: white;
+  margin: 15px 0;
+  text-decoration: none;
+}
+
+.admin-content {
+  flex: 1;
+  padding: 40px;
+  background: #f5f5f5;
+}
+
+.admin-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.admin-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  flex: 1;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}

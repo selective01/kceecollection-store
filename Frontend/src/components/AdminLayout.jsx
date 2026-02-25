@@ -1,0 +1,13 @@
+import AdminSidebar from "./AdminSidebar";
+import "../assets/css/admin.css";
+
+export default function AdminLayout({ children }) {
+  return (
+    <div className="admin-container">
+      <AdminSidebar />
+      <div className="admin-content">
+        {children}
+      </div>
+    </div>
+  );
+}
