@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useCart } from "../hooks/useCart";
+import { useCart } from "../context/CartContext";
 import "../assets/css/checkout.css";
 
 const countryStateData = {
@@ -31,7 +31,7 @@ const shippingFees = {
 };
 
 export default function Checkout() {
-  const { cart, total } = useCart();
+  const { cartItems, subtotal } = useCart();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -45,7 +45,7 @@ export default function Checkout() {
 
   const [errors, setErrors] = useState({});
   const [shipping, setShipping] = useState(0);
-  const grandTotal = total + shipping;
+  const grandTotal = subtotal + shipping;
 
   const isFormValid =
   Object.values(errors).every((err) => !err) &&
@@ -317,7 +317,7 @@ export default function Checkout() {
         <div className="checkout-right">
           <h2>Your Order</h2>
 
-          {cart.map((item, index) => (
+          {cartItems.map((item, index) => (
             <div className="order-item" key={index}>
               <div>
                 <p className="product-name">{item.name}</p>
@@ -334,7 +334,7 @@ export default function Checkout() {
           <div className="order-summary">
             <h3>Order Summary</h3>
 
-            <p>Subtotal: ₦{total.toLocaleString()}</p>
+            <p>Subtotal: ₦{subtotal.toLocaleString()}</p>
             <p>Shipping: ₦{shipping.toLocaleString()}</p>
 
             <hr />
