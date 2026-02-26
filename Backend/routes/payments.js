@@ -5,6 +5,7 @@ import Order from "../models/Order.js";
 const router = express.Router();
 
 router.get("/verify/:reference", async (req, res) => {
+  console.log("VERIFY ROUTE HIT");
   try {
     const { reference } = req.params;
 
@@ -38,6 +39,31 @@ router.get("/verify/:reference", async (req, res) => {
 
   } catch (error) {
     res.status(500).json({ error: "Verification failed" });
+  }
+});
+
+router.post("/initialize", async (req, res) => {
+  try {
+    const { email, amount, metadata } = req.body;
+
+    const response = await axios.post(
+      "https://api.paystack.co/transaction/initialize",
+      {
+        email,
+        amount: amount * 100, // convert to kobo
+        metadata,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: "Payment initialization failed" });
   }
 });
 

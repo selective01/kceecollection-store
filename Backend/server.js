@@ -6,8 +6,11 @@ import connectDB from "./config/db.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
+import dns from "node:dns/promises";
 
 dotenv.config();
+
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 connectDB();
 
