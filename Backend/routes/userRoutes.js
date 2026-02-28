@@ -81,18 +81,4 @@ router.get("/", protectAdmin, async (req, res) => {
   }
 });
 
-router.get("/make-admin/:email", async (req, res) => {
-  try {
-    const user = await User.findOneAndUpdate(
-      { email: req.params.email },
-      { $set: { role: "admin" } },
-      { new: true }
-    );
-    if (!user) return res.status(404).json({ msg: "User not found" });
-    res.json({ msg: "Done", user });
-  } catch (err) {
-    res.status(500).json({ msg: err.message });
-  }
-});
-
 export default router;
