@@ -129,7 +129,7 @@
 
 .admin-input-wrapper input {
     width: 100%;
-    padding: 12px 42px 12px 42px;
+    padding: 12px 48px 12px 42px;
     border: 1.5px solid #e5e7eb;
     border-radius: 8px;
     font-size: 0.9rem;
@@ -152,15 +152,18 @@
 
 .toggle-pw-btn {
     position: absolute;
-    right: 12px;
+    right: 16px;
+    top: 10;
+    width: 28px;
+    height: 28px;
     background: none;
+    border-radius: 50%;
     border: none;
     cursor: pointer;
-    padding: 4px;
-    color: #9ca3af;
+    padding: 0;
     display: flex;
     align-items: center;
-    transition: color 0.2s;
+    justify-content: center;
 }
 
 .toggle-pw-btn:hover { color: #374151; }

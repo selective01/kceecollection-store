@@ -1,85 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "../../assets/css/ordersPage.css"
 
 const BASE_URL = import.meta.env.VITE_API_URL;
-
-const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
-  .ap { font-family: 'DM Sans', sans-serif; }
-  .ap-topbar {
-    background: #fff; padding: 16px 28px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid #e5e7eb; margin-bottom: 28px;
-  }
-  .ap-topbar h1 { font-size: 1.4rem; font-weight: 600; color: #0f172a; letter-spacing: -0.3px; }
-  .ap-breadcrumb { font-size: 0.82rem; color: #6b7280; }
-  .ap-breadcrumb span { color: #1d4ed8; font-weight: 500; }
-  .ap-body { padding: 0 28px 28px; }
-  .ap-card { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
-  .ap-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  .ap-table th {
-    background: #f8fafc; padding: 12px 16px; text-align: left;
-    font-weight: 600; color: #6b7280; font-size: 0.75rem;
-    text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e5e7eb;
-  }
-  .ap-table td { padding: 13px 16px; border-bottom: 1px solid #f1f5f9; color: #374151; vertical-align: middle; }
-  .ap-table tr:last-child td { border-bottom: none; }
-  .ap-table tr:hover td { background: #f8fafc; }
-  .sbadge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; font-weight: 500; }
-  .s-pending { background: #fef3c7; color: #92400e; }
-  .s-paid { background: #d1fae5; color: #065f46; }
-  .s-shipped { background: #dbeafe; color: #1e40af; }
-  .s-delivered { background: #ede9fe; color: #5b21b6; }
-  .btn-blue {
-    background: #1d4ed8; color: #fff; border: none; padding: 6px 12px;
-    border-radius: 6px; font-size: 0.78rem; font-family: 'DM Sans', sans-serif;
-    cursor: pointer; font-weight: 500; transition: background 0.2s;
-  }
-  .btn-blue:hover { background: #1e40af; }
-  .ap-select {
-    border: 1.5px solid #e5e7eb; border-radius: 6px; padding: 5px 8px;
-    font-size: 0.78rem; font-family: 'DM Sans', sans-serif;
-    color: #374151; background: #f9fafb; cursor: pointer; outline: none;
-  }
-  .ap-select:focus { border-color: #1d4ed8; }
-  .ap-empty { padding: 40px; text-align: center; color: #9ca3af; font-size: 0.9rem; }
-  .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.45); display: flex;
-    align-items: center; justify-content: center; z-index: 1000;
-  }
-  .modal-box {
-    background: #fff; border-radius: 12px; padding: 32px;
-    width: 90%; max-width: 480px; position: relative;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-  }
-  .modal-x {
-    position: absolute; top: 14px; right: 18px;
-    background: none; border: none; font-size: 1.4rem;
-    cursor: pointer; color: #6b7280; transition: color 0.15s;
-  }
-  .modal-x:hover { color: #0f172a; }
-  .modal-box h2 {
-    font-size: 1.1rem; font-weight: 600; color: #0f172a;
-    margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e5e7eb;
-  }
-  .modal-row { display: flex; padding: 9px 0; border-bottom: 1px solid #f1f5f9; font-size: 0.85rem; }
-  .modal-row:last-child { border-bottom: none; }
-  .modal-lbl { width: 40%; font-weight: 500; color: #6b7280; }
-  .modal-val { color: #1f2937; }
-  .modal-close-btn {
-    margin-top: 20px; width: 100%; padding: 11px;
-    background: #0f172a; color: #fff; border: none;
-    border-radius: 8px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif;
-    cursor: pointer; font-weight: 500; transition: background 0.2s;
-  }
-  .modal-close-btn:hover { background: #1d4ed8; }
-`;
 
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedShipping, setSelectedShipping] = useState(null);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const fetchOrders = async () => {
@@ -117,7 +46,6 @@ export default function OrdersPage() {
 
   return (
     <>
-      <style>{styles}</style>
       <div className="ap">
         <div className="ap-topbar">
           <h1>Orders</h1>
@@ -136,8 +64,12 @@ export default function OrdersPage() {
                 <table className="ap-table">
                   <thead>
                     <tr>
-                      <th>Customer</th><th>Amount</th><th>Status</th>
-                      <th>Date</th><th>Details</th><th>Action</th>
+                      <th>Customer</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                      <th>Details</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -150,9 +82,15 @@ export default function OrdersPage() {
                             {order.status || "Pending"}
                           </span>
                         </td>
-                        <td style={{ fontSize: "0.8rem", color: "#6b7280" }}>{formatDate(order.createdAt)}</td>
+                        <td style={{ fontSize: "0.8rem", color: "#6b7280" }}>
+                          {formatDate(order.createdAt)}
+                        </td>
+                        {/* ✅ Details: View Order + Shipping side by side */}
                         <td>
-                          <button className="btn-blue" onClick={() => setSelectedOrder(order)}>
+                          <button className="btn-view" onClick={() => setSelectedOrder(order)}>
+                            View Order
+                          </button>
+                          <button className="btn-ship" onClick={() => setSelectedShipping(order)}>
                             Shipping
                           </button>
                         </td>
@@ -175,28 +113,85 @@ export default function OrdersPage() {
         </div>
       </div>
 
-      {selectedOrder && (
+      {/* Shipping Modal */}
+      {selectedShipping && (
         <div className="modal-overlay">
           <div className="modal-box">
-            <button className="modal-x" onClick={() => setSelectedOrder(null)}>×</button>
+            <button className="modal-x" onClick={() => setSelectedShipping(null)}>×</button>
             <h2>Shipping Details</h2>
             {[
-              ["Customer", selectedOrder.customer?.fullName],
-              ["Email", selectedOrder.customer?.email],
-              ["Phone", selectedOrder.customer?.phone],
-              ["Address", selectedOrder.customer?.address],
-              ["City", selectedOrder.customer?.state],
-              ["Country", selectedOrder.customer?.country],
-              ["Postal Code", selectedOrder.customer?.postalCode],
-              ["Order Date", formatDate(selectedOrder.createdAt)],
-              ["Total", `₦${(selectedOrder.totalPrice || 0).toLocaleString()}`],
-              ["Payment", selectedOrder.paymentStatus],
+              ["Customer", selectedShipping.customer?.fullName],
+              ["Email", selectedShipping.customer?.email],
+              ["Phone", selectedShipping.customer?.phone],
+              ["Address", selectedShipping.customer?.address],
+              ["City", selectedShipping.customer?.state],
+              ["Country", selectedShipping.customer?.country],
+              ["Postal Code", selectedShipping.customer?.postalCode],
+              ["Order Date", formatDate(selectedShipping.createdAt)],
+              ["Total", `₦${(selectedShipping.totalPrice || 0).toLocaleString()}`],
+              ["Payment", selectedShipping.paymentStatus],
             ].map(([label, value]) => (
               <div className="modal-row" key={label}>
                 <div className="modal-lbl">{label}</div>
                 <div className="modal-val">{value || "N/A"}</div>
               </div>
             ))}
+            <button className="modal-close-btn" onClick={() => setSelectedShipping(null)}>Close</button>
+          </div>
+        </div>
+      )}
+
+      {/* View Order Modal */}
+      {selectedOrder && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <button className="modal-x" onClick={() => setSelectedOrder(null)}>×</button>
+            <h2>Order Details</h2>
+            {[
+              ["Customer", selectedOrder.customer?.fullName],
+              ["Order Date", formatDate(selectedOrder.createdAt)],
+              ["Payment Status", selectedOrder.paymentStatus],
+              ["Order Status", selectedOrder.status],
+              ["Reference", selectedOrder.reference],
+            ].map(([label, value]) => (
+              <div className="modal-row" key={label}>
+                <div className="modal-lbl">{label}</div>
+                <div className="modal-val">{value || "N/A"}</div>
+              </div>
+            ))}
+
+            <div className="items-section">
+              <h3>Items Ordered</h3>
+              {(!selectedOrder.items || selectedOrder.items.length === 0) ? (
+                <p style={{ color: "#9ca3af", fontSize: "0.85rem" }}>No items found.</p>
+              ) : (
+                <>
+                  {selectedOrder.items.map((item, i) => (
+                    <div className="item-row" key={i}>
+                      {item.image
+                        ? <img src={item.image} alt={item.name} className="item-img" />
+                        : <div className="item-img-ph" />
+                      }
+                      <div className="item-info">
+                        <div className="item-name">{item.name || "Unknown"}</div>
+                        <div className="item-meta">
+                          {item.size && `Size: ${item.size}`}
+                          {item.size && item.quantity ? " · " : ""}
+                          {item.quantity && `Qty: ${item.quantity}`}
+                        </div>
+                      </div>
+                      <div className="item-price">
+                        ₦{((item.price || 0) * (item.quantity || 1)).toLocaleString()}
+                      </div>
+                    </div>
+                  ))}
+                  <div className="total-row">
+                    <span>Total</span>
+                    <span>₦{(selectedOrder.totalPrice || 0).toLocaleString()}</span>
+                  </div>
+                </>
+              )}
+            </div>
             <button className="modal-close-btn" onClick={() => setSelectedOrder(null)}>Close</button>
           </div>
         </div>

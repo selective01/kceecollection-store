@@ -50,13 +50,16 @@ router.post("/", protectUser, async (req, res) => {
       totalPrice: req.body.totalPrice,
       paymentStatus: req.body.paymentStatus || "Pending",
       status: "Pending",
+      customer: req.body.customer,
+      reference: req.body.reference,
     });
 
     const createdOrder = await order.save();
 
     res.status(201).json(createdOrder);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create order" });
+    console.error("Order error:", error);
+    res.status(500).json({ error: error.message });
   }
 });
 

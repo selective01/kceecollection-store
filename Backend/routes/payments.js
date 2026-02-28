@@ -5,7 +5,6 @@ import Order from "../models/Order.js";
 const router = express.Router();
 
 router.get("/verify/:reference", async (req, res) => {
-  console.log("VERIFY ROUTE HIT");
   try {
     const { reference } = req.params;
 
@@ -21,24 +20,13 @@ router.get("/verify/:reference", async (req, res) => {
     const data = response.data.data;
 
     if (data.status === "success") {
-      const order = new Order({
-        user: data.metadata.userId, // Assume sent in metadata during init
-        customer: data.metadata.customer, // Or pull from req.body if needed
-        items: data.metadata.items,
-        amount: data.amount / 100,
-        reference: data.reference,
-        status: "Paid",
-        paymentStatus: "Paid",
-      });
-
-      await order.save();
-
-      return res.json({ success: true, order });
+      return res.json({ success: true }); // ✅ just confirm payment, don't save order
     }
 
     res.status(400).json({ success: false });
 
   } catch (error) {
+    console.error("Verify error:", error.message);
     res.status(500).json({ error: "Verification failed" });
   }
 });
