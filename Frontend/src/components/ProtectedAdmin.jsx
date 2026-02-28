@@ -1,9 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function ProtectedAdmin() {
-  const token = localStorage.getItem("adminToken");
+  const { user, loading } = useAuth();
 
-  if (!token) {
+  if (loading) return null; // wait for auth to resolve
+
+  if (!user || user.role !== "admin") {
     return <Navigate to="/admin/login" replace />;
   }
 
