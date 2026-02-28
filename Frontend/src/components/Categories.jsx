@@ -37,7 +37,7 @@ const products = [
   { title: "Sneakers", href: "/sneakers", img: sneakersImg },
   { title: "Sleeveless", href: "/sleeveless", img: sleevelessImg },
   { title: "Slippers", href: "/slippers", img: slippersImg },
-  { title: "Retro Jersey", href: "/retrojersey", img: retroJerseyImg },
+  { title: "Retro Jersey", href: "/retro-jersey", img: retroJerseyImg },
   { title: "T-shirts", href: "/t-shirts", img: tShirtImg },
   { title: "Watches", href: "/watches", img: WatchesImg },
 ];

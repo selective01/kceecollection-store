@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 
 import { useAuth } from "../context/AuthContext";
 
@@ -47,7 +46,7 @@ const Polo = () => {
 
   return (
     <>
-      <Navbar />
+      
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Polo</h2>
@@ -64,7 +63,7 @@ const Polo = () => {
           </div>
         ))}</div>
       </section>
-      <Footer />
+      
     </>
   );
 };

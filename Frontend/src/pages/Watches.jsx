@@ -3,8 +3,7 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { Link, useLocation } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 
 import watch1 from "../assets/My_Collections/Watches/Watch (1).jpg";
 import watch2 from "../assets/My_Collections/Watches/Watch (2).jpg";
@@ -38,7 +37,7 @@ const Watches = () => {
 
   return (
     <>
-      <Navbar />
+      
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Watches</h2>
@@ -80,7 +79,7 @@ const Watches = () => {
         </div>
 
       </section>
-      <Footer />
+      
     </>
   );
 };

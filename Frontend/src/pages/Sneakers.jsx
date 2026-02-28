@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+
 
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
@@ -47,7 +46,7 @@ const Sneakers = () => {
 
   return (
     <>
-      <Navbar />
+      
       <section className="premium-categories product-page">
         <div className="section-header">
           <h2>Sneakers</h2>
@@ -106,7 +105,7 @@ const Sneakers = () => {
           ))}
         </div>
       </section>
-      <Footer />
+      
     </>
   );
 };
