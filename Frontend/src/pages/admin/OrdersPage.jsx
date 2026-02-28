@@ -8,78 +8,50 @@ export default function OrdersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // 1. Declare the function FIRST
   const fetchOrders = async () => {
     try {
       setLoading(true);
       setError(null);
 
-      const token = localStorage.getItem("adminToken");
+      const token = localStorage.getItem("token"); // ✅ fixed
 
-      if (!token) {
-        throw new Error("No admin token found. Please log in again.");
-      }
+      if (!token) throw new Error("No token found. Please log in again.");
 
       const res = await axios.get(`${BASE_URL}/api/orders`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       setOrders(res.data || []);
     } catch (err) {
-      console.error("Failed to fetch orders:", err);
-      setError(
-        err.response?.data?.message ||
-        err.message ||
-        "Could not load orders. Please try again."
-      );
+      setError(err.response?.data?.message || err.message || "Could not load orders.");
     } finally {
       setLoading(false);
     }
   };
 
-  // 2. Now it's safe to call it in useEffect
-  useEffect(() => {
-    fetchOrders();
-  }, []);
+  useEffect(() => { fetchOrders(); }, []);
 
-  // 3. Optional: update status function (also needs token)
   const updateStatus = async (id, status) => {
     try {
-      const token = localStorage.getItem("adminToken");
-      if (!token) throw new Error("No admin token");
+      const token = localStorage.getItem("token"); // ✅ fixed
+      if (!token) throw new Error("No token");
 
-      await axios.put(
-        `${BASE_URL}/api/orders/${id}`,
-        { status },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.put(`${BASE_URL}/api/orders/${id}`, { status }, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-      // Refresh list after update
       fetchOrders();
     } catch (err) {
-      console.error("Update failed:", err);
       alert("Failed to update order status");
     }
   };
 
-  if (loading) {
-    return <div className="loading">Loading orders...</div>;
-  }
-
-  if (error) {
-    return <div className="error-message" style={{ color: "red" }}>Error: {error}</div>;
-  }
+  if (loading) return <div>Loading orders...</div>;
+  if (error) return <div style={{ color: "red" }}>Error: {error}</div>;
 
   return (
     <>
       <h1>Orders</h1>
-
       {orders.length === 0 ? (
         <p>No orders found.</p>
       ) : (
@@ -97,18 +69,12 @@ export default function OrdersPage() {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td>{order.customer?.fullName || order.email || "N/A"}</td>
-                <td>₦{(order.amount || 0).toLocaleString()}</td>
+                <td>₦{(order.totalPrice || 0).toLocaleString()}</td> {/* ✅ totalPrice not amount */}
                 <td>{order.status || "Pending"}</td>
+                <td>{order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "N/A"}</td>
                 <td>
-                  {order.createdAt
-                    ? new Date(order.createdAt).toLocaleDateString()
-                    : "N/A"}
-                </td>
-                <td>
-                  <select
-                    value={order.status || "Pending"}
-                    onChange={(e) => updateStatus(order._id, e.target.value)}
-                  >
+                  <select value={order.status || "Pending"}
+                    onChange={(e) => updateStatus(order._id, e.target.value)}>
                     <option value="Pending">Pending</option>
                     <option value="Paid">Paid</option>
                     <option value="Shipped">Shipped</option>
