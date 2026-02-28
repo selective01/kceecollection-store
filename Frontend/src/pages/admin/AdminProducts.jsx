@@ -1,113 +1,31 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import "../../assets/css/adminProducts.css"
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-const styles = `
-  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
-  .ap { font-family: 'DM Sans', sans-serif; }
-  .ap-topbar {
-    background: #fff; padding: 16px 28px;
-    display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid #e5e7eb; margin-bottom: 28px;
-  }
-  .ap-topbar h1 { font-size: 1.4rem; font-weight: 600; color: #0f172a; letter-spacing: -0.3px; }
-  .ap-breadcrumb { font-size: 0.82rem; color: #6b7280; }
-  .ap-breadcrumb span { color: #1d4ed8; font-weight: 500; }
-  .ap-body { padding: 0 28px 28px; }
-
-  /* Create form card */
-  .ap-form-card {
-    background: #fff; border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    padding: 24px; margin-bottom: 24px;
-  }
-  .ap-form-card h2 { font-size: 1rem; font-weight: 600; color: #0f172a; margin-bottom: 16px; }
-  .ap-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
-  .ap-input {
-    border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 9px 12px;
-    font-size: 0.85rem; font-family: 'DM Sans', sans-serif;
-    color: #374151; background: #f9fafb; outline: none; width: 100%;
-  }
-  .ap-input:focus { border-color: #1d4ed8; background: #fff; }
-  .btn-create {
-    background: #1d4ed8; color: #fff; border: none; padding: 9px 20px;
-    border-radius: 8px; font-size: 0.85rem; font-family: 'DM Sans', sans-serif;
-    cursor: pointer; font-weight: 500; transition: background 0.2s; margin-top: 12px;
-  }
-  .btn-create:hover { background: #1e40af; }
-
-  /* Table */
-  .ap-card { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); overflow: hidden; }
-  .ap-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-  .ap-table th {
-    background: #f8fafc; padding: 12px 16px; text-align: left;
-    font-weight: 600; color: #6b7280; font-size: 0.75rem;
-    text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #e5e7eb;
-  }
-  .ap-table td { padding: 13px 16px; border-bottom: 1px solid #f1f5f9; color: #374151; vertical-align: middle; }
-  .ap-table tr:last-child td { border-bottom: none; }
-  .ap-table tr:hover td { background: #f8fafc; }
-  .btn-edit {
-    background: #0f172a; color: #fff; border: none; padding: 6px 12px;
-    border-radius: 6px; font-size: 0.78rem; font-family: 'DM Sans', sans-serif;
-    cursor: pointer; font-weight: 500; transition: background 0.2s; margin-right: 6px;
-  }
-  .btn-edit:hover { background: #1d4ed8; }
-  .btn-red {
-    background: #dc2626; color: #fff; border: none; padding: 6px 12px;
-    border-radius: 6px; font-size: 0.78rem; font-family: 'DM Sans', sans-serif;
-    cursor: pointer; font-weight: 500; transition: background 0.2s;
-  }
-  .btn-red:hover { background: #b91c1c; }
-  .ap-empty { padding: 40px; text-align: center; color: #9ca3af; font-size: 0.9rem; }
-  .prod-img { width: 44px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid #e5e7eb; }
-
-  /* Modal */
-  .modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.45); display: flex;
-    align-items: center; justify-content: center; z-index: 1000;
-  }
-  .modal-box {
-    background: #fff; border-radius: 12px; padding: 32px;
-    width: 90%; max-width: 460px; position: relative;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-  }
-  .modal-x {
-    position: absolute; top: 14px; right: 18px;
-    background: none; border: none; font-size: 1.4rem;
-    cursor: pointer; color: #6b7280;
-  }
-  .modal-x:hover { color: #0f172a; }
-  .modal-box h2 { font-size: 1.1rem; font-weight: 600; color: #0f172a; margin-bottom: 16px; }
-  .modal-grid { display: flex; flex-direction: column; gap: 10px; }
-  .modal-label { font-size: 0.75rem; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
-  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
-  .btn-save {
-    flex: 1; padding: 11px; background: #1d4ed8; color: #fff;
-    border: none; border-radius: 8px; font-size: 0.9rem;
-    font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500;
-    transition: background 0.2s;
-  }
-  .btn-save:hover { background: #1e40af; }
-  .btn-cancel {
-    flex: 1; padding: 11px; background: #f1f5f9; color: #374151;
-    border: none; border-radius: 8px; font-size: 0.9rem;
-    font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500;
-  }
-  .btn-cancel:hover { background: #e2e8f0; }
-`;
+// Convert file to base64
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 
 export default function AdminProducts() {
   const { user } = useAuth();
   const [products, setProducts] = useState([]);
   const [formData, setFormData] = useState({ name: "", price: 0, description: "", image: "" });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editProduct, setEditProduct] = useState(null);
+  const [editImageFile, setEditImageFile] = useState(null);
+  const [editImagePreview, setEditImagePreview] = useState(null);
 
   useEffect(() => { if (user) fetchProducts(); }, [user]);
 
@@ -121,12 +39,29 @@ export default function AdminProducts() {
     } finally { setLoading(false); }
   };
 
+  const handleImageChange = (e, isEdit = false) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const preview = URL.createObjectURL(file);
+    if (isEdit) {
+      setEditImageFile(file);
+      setEditImagePreview(preview);
+    } else {
+      setImageFile(file);
+      setImagePreview(preview);
+    }
+  };
+
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.post(`${BASE_URL}/api/products`, formData);
+      let imageData = formData.image;
+      if (imageFile) imageData = await toBase64(imageFile);
+      await axios.post(`${BASE_URL}/api/products`, { ...formData, image: imageData });
       setFormData({ name: "", price: 0, description: "", image: "" });
+      setImageFile(null);
+      setImagePreview(null);
       fetchProducts();
     } catch (err) {
       setError(err.response?.data?.msg || "Failed to create product");
@@ -148,8 +83,11 @@ export default function AdminProducts() {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.put(`${BASE_URL}/api/products/${editProduct._id}`, editProduct);
+      let imageData = editProduct.image;
+      if (editImageFile) imageData = await toBase64(editImageFile);
+      await axios.put(`${BASE_URL}/api/products/${editProduct._id}`, { ...editProduct, image: imageData });
       setIsEditModalOpen(false); setEditProduct(null);
+      setEditImageFile(null); setEditImagePreview(null);
       fetchProducts();
     } catch (err) {
       setError(err.response?.data?.msg || "Failed to update");
@@ -158,7 +96,6 @@ export default function AdminProducts() {
 
   return (
     <>
-      <style>{styles}</style>
       <div className="ap">
         <div className="ap-topbar">
           <h1>Manage Products</h1>
@@ -174,32 +111,55 @@ export default function AdminProducts() {
             <form onSubmit={handleCreate}>
               <div className="ap-form-grid">
                 <div>
-                  <div className="modal-label">Product Name</div>
+                  <div className="field-label">Product Name *</div>
                   <input className="ap-input" type="text" placeholder="e.g. Premium Cap"
                     value={formData.name} required
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
                 </div>
                 <div>
-                  <div className="modal-label">Price (₦)</div>
+                  <div className="field-label">Price (₦) *</div>
                   <input className="ap-input" type="number" placeholder="e.g. 5000"
                     value={formData.price} required
                     onChange={(e) => setFormData({ ...formData, price: +e.target.value })} />
                 </div>
                 <div>
-                  <div className="modal-label">Description</div>
+                  <div className="field-label">Description</div>
                   <input className="ap-input" type="text" placeholder="Short description"
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
                 </div>
                 <div>
-                  <div className="modal-label">Image URL</div>
-                  <input className="ap-input" type="text" placeholder="https://..."
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })} />
+                  <div className="field-label">Product Image</div>
+                  <div className="file-upload-wrapper">
+                    <input
+                      type="file" accept="image/*"
+                      className="file-upload-input"
+                      id="product-image-upload"
+                      onChange={(e) => handleImageChange(e, false)}
+                    />
+                    <label htmlFor="product-image-upload" className="file-upload-label">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                      </svg>
+                      {imageFile ? imageFile.name : "Choose File"}
+                    </label>
+                    {imagePreview && (
+                      <div className="file-preview-wrap">
+                        <img src={imagePreview} className="file-preview" alt="preview" />
+                        <span className="file-preview-name">{imageFile?.name}</span>
+                        <button type="button" className="file-remove"
+                          onClick={() => { setImageFile(null); setImagePreview(null); }}>
+                          ✕ Remove
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-              <button type="submit" className="btn-create" disabled={loading}>
-                {loading ? "Creating..." : "+ Create Product"}
+              <button type="submit" className="btn-add-product" disabled={loading}>
+                {loading ? "Adding..." : "Add Product"}
               </button>
             </form>
           </div>
@@ -233,7 +193,11 @@ export default function AdminProducts() {
                         {p.description || "—"}
                       </td>
                       <td>
-                        <button className="btn-edit" onClick={() => { setEditProduct(p); setIsEditModalOpen(true); }}>Edit</button>
+                        <button className="btn-edit" onClick={() => {
+                          setEditProduct(p);
+                          setEditImagePreview(p.image || null);
+                          setIsEditModalOpen(true);
+                        }}>Edit</button>
                         <button className="btn-red" onClick={() => handleDelete(p._id)}>Delete</button>
                       </td>
                     </tr>
@@ -249,29 +213,50 @@ export default function AdminProducts() {
       {isEditModalOpen && editProduct && (
         <div className="modal-overlay">
           <div className="modal-box">
-            <button className="modal-x" onClick={() => { setIsEditModalOpen(false); setEditProduct(null); }}>×</button>
+            <button className="modal-x" onClick={() => {
+              setIsEditModalOpen(false); setEditProduct(null);
+              setEditImageFile(null); setEditImagePreview(null);
+            }}>×</button>
             <h2>Edit Product</h2>
             <form onSubmit={handleUpdate}>
               <div className="modal-grid">
                 <div>
-                  <div className="modal-label">Product Name</div>
+                  <div className="field-label">Product Name</div>
                   <input className="ap-input" type="text" value={editProduct.name} required
                     onChange={(e) => setEditProduct({ ...editProduct, name: e.target.value })} />
                 </div>
                 <div>
-                  <div className="modal-label">Price (₦)</div>
+                  <div className="field-label">Price (₦)</div>
                   <input className="ap-input" type="number" value={editProduct.price} required
                     onChange={(e) => setEditProduct({ ...editProduct, price: +e.target.value })} />
                 </div>
                 <div>
-                  <div className="modal-label">Description</div>
-                  <input className="ap-input" type="text" value={editProduct.description}
+                  <div className="field-label">Description</div>
+                  <input className="ap-input" type="text" value={editProduct.description || ""}
                     onChange={(e) => setEditProduct({ ...editProduct, description: e.target.value })} />
                 </div>
                 <div>
-                  <div className="modal-label">Image URL</div>
-                  <input className="ap-input" type="text" value={editProduct.image}
-                    onChange={(e) => setEditProduct({ ...editProduct, image: e.target.value })} />
+                  <div className="field-label">Product Image</div>
+                  {editImagePreview && (
+                    <div className="file-preview-wrap" style={{ marginBottom: 8 }}>
+                      <img src={editImagePreview} className="file-preview" alt="current" />
+                      <span className="file-preview-name" style={{ color: "#6b7280" }}>Current image</span>
+                    </div>
+                  )}
+                  <input
+                    type="file" accept="image/*"
+                    className="file-upload-input"
+                    id="edit-image-upload"
+                    onChange={(e) => handleImageChange(e, true)}
+                  />
+                  <label htmlFor="edit-image-upload" className="file-upload-label">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                      <polyline points="17 8 12 3 7 8"/>
+                      <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                    {editImageFile ? editImageFile.name : "Change Image"}
+                  </label>
                 </div>
               </div>
               <div className="modal-actions">
@@ -279,7 +264,7 @@ export default function AdminProducts() {
                   {loading ? "Saving..." : "Save Changes"}
                 </button>
                 <button type="button" className="btn-cancel"
-                  onClick={() => { setIsEditModalOpen(false); setEditProduct(null); }}>
+                  onClick={() => { setIsEditModalOpen(false); setEditProduct(null); setEditImageFile(null); setEditImagePreview(null); }}>
                   Cancel
                 </button>
               </div>
