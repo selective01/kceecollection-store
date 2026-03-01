@@ -50,8 +50,21 @@ export default function UserDashboard() {
 
         {/* Header */}
         <div className="ud-header">
-          <h1 className="ud-welcome">👋 Welcome back, {user?.name?.split(" ")[0] || "User"}</h1>
-          <p className="ud-subtext">Here's a summary of your account activity</p>
+          <div>
+            <h1 className="ud-welcome">Welcome back, {user?.name?.split(" ")[0] || "User"}</h1>
+            <p className="ud-subtext">Here's a summary of your account activity</p>
+          </div>
+          <Link to="/" title="Homepage" style={{
+            display: "flex", alignItems: "center", justifyContent: "center",
+            width: 38, height: 38, borderRadius: "50%",
+            background: "#f0fdf4", color: "#3A9D23",
+            textDecoration: "none", transition: "background 0.2s",
+          }}
+            onMouseEnter={(e) => e.currentTarget.style.background = "#dcfce7"}
+            onMouseLeave={(e) => e.currentTarget.style.background = "#f0fdf4"}
+          >
+            <i className="fa-solid fa-house" style={{ fontSize: 15 }}></i>
+          </Link>
         </div>
 
         {/* Stats */}

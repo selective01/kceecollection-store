@@ -1,8 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
+:root {
+  --white-color: #ffffff;
+  --black-color: #0b0b0b;
+  --design-color: #3A9D23;       
+  --design-active-color: #27632A;  
+  --background-color: #F5F5DC;    
+  --red-color: #dc3545;          
+}
 
 .ps-wrap {
 min-height: 100vh;
-background: #f8fafc;
+background: var(--background-color);
 font-family: 'DM Sans', sans-serif;
 padding: 40px 5%;
 }
@@ -21,7 +29,7 @@ gap: 12px;
 
 .ps-back {
 font-size: 0.83rem;
-color: #3A9D23;
+color: var(--design-color);
 text-decoration: none;
 font-weight: 500;
 }
@@ -39,7 +47,7 @@ gap: 24px;
 }
 
 .ps-card {
-background: #fff;
+background: var(--white-color);
 border-radius: 12px;
 box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 overflow: hidden;
@@ -146,8 +154,8 @@ border-bottom: 1px solid #f1f5f9;
 .ps-avatar {
 width: 64px; height: 64px;
 border-radius: 50%;
-background: #3A9D23;
-color: #fff;
+background: var(--design-color);
+color: var(--white-color);
 display: flex; align-items: center; justify-content: center;
 font-size: 26px; font-weight: 700;
 flex-shrink: 0;
