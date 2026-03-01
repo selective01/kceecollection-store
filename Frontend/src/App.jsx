@@ -31,7 +31,7 @@ import TShirts from "./pages/TShirts.jsx";
 import Watches from "./pages/Watches.jsx";
 import PaymentSuccess from "./pages/PaymentSuccess.jsx";
 import OrderSuccess from "./pages/OrderSuccess.jsx";
-import UserDashboard from "./pages/user/UserDashboard.jsx";
+import Userdashboard from "./pages/user/Userdashboard.jsx";
 import MyOrders from "./pages/user/MyOrders.jsx";
 import ProfileSettings from "./pages/user/ProfileSettings.jsx";
 
