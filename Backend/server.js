@@ -12,6 +12,7 @@ import payments from "./routes/payments.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import dns from "node:dns/promises";
 import authRoutes from "./routes/authRoutes.js";
+import newArrivalRoutes from "./routes/newArrivalRoutes.js";
 
 
 dotenv.config();
@@ -42,6 +43,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/paystack", payments);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/newarrivals", newArrivalRoutes);
 
 // Root test
 app.get("/", (req, res) => {

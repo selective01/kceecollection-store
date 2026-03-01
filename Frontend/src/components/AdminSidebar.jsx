@@ -63,6 +63,15 @@ export default function AdminSidebar() {
         </svg>
       ),
     },
+    {
+      to: "/admin/newarrivals",
+      label: "New Arrivals",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.364 5.636a9 9 0 010 12.728M15.536 8.464a5 5 0 010 7.072M6.343 17.657a9 9 0 010-12.728M9.172 15.536a5 5 0 010-7.072M12 13a1 1 0 100-2 1 1 0 000 2z"/>
+        </svg>
+      ),
+    },
   ];
 
   return (
