@@ -81,6 +81,15 @@ export default function AdminSidebar() {
         </svg>
       ),
     },
+    {
+      to: "/admin/shipping",
+      label: "Shipping",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8zM5.5 19a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm13 0a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+        </svg>
+      ),
+    },
   ];
 
   return (

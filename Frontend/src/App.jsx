@@ -41,8 +41,9 @@ import OrdersPage from "./pages/admin/OrdersPage.jsx";
 import AdminProducts from "./pages/admin/AdminProducts.jsx";
 import AdminUsers from "./pages/admin/AdminUsers.jsx";
 import AdminCategories from "./pages/admin/AdminCategories.jsx";
-import AdminNewArrivals from "./pages/admin/AdminNewArrivals";
-import AdminSalesReport from "./pages/admin/AdminSalesReport";
+import AdminNewArrivals from "./pages/admin/AdminNewArrivals.jsx";
+import AdminSalesReport from "./pages/admin/AdminSalesReport.jsx";
+import AdminShipping from "./pages/admin/AdminShipping.jsx";
 
 import ProtectedAdmin from "./components/ProtectedAdmin";
 
@@ -86,6 +87,7 @@ function AdminRoutes() {
           <Route path="categories" element={<AdminCategories />} />
           <Route path="newarrivals" element={<AdminNewArrivals />} />
           <Route path="sales-report" element={<AdminSalesReport />} />
+          <Route path="shipping" element={<AdminShipping />} />
         </Route>
       </Route>
     </Routes>

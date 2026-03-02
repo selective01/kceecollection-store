@@ -1,7 +1,8 @@
-import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express";
 import cors from "cors";
-import axios from "axios";
 import connectDB from "./config/db.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
@@ -13,9 +14,8 @@ import categoryRoutes from "./routes/categoryRoutes.js";
 import dns from "node:dns/promises";
 import authRoutes from "./routes/authRoutes.js";
 import newArrivalRoutes from "./routes/newArrivalRoutes.js";
+import shippingRoutes from "./routes/shippingRoutes.js";
 
-
-dotenv.config();
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 connectDB();
 
@@ -44,6 +44,7 @@ app.use("/api/paystack", payments);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/newarrivals", newArrivalRoutes);
+app.use("/api/shipping", shippingRoutes);
 
 // Root test
 app.get("/", (req, res) => {
