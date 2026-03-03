@@ -7,7 +7,7 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 
 const CATEGORIES = [
   "Bags", "Caps", "ClubJersey", "DesignerShirts", "Hoodies",
-  "Jeans", "JeanShorts", "Joggers", "Perfume", "Polo",
+  "Jeans", "JeanShorts", "Joggers", "LongSleeve", "Perfume", "Polo",
   "RetroJersey", "Shoes", "Shorts", "Sleeveless", "Slippers",
   "Sneakers", "TShirts", "Watches"
 ];
