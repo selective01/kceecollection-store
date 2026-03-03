@@ -157,7 +157,7 @@ const Navbar = () => {
               onClick={() => setDropdownOpen((prev) => !prev)}
               style={{ display: "flex", alignItems: "center", gap: "6px", background: "none", border: "none", cursor: "pointer", padding: 0 }}
             >
-              <span style={{ width: "30px", height: "30px", background: "#3A9D23", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "700", flexShrink: 0 }}>
+              <span style={{ width: "30px", height: "30px", borderRadius: "50%", background: "#3A9D23", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "700", flexShrink: 0 }}>
                 {initial}
               </span>
               <span className="menu-text" style={{ color: "#3A9D23", fontWeight: "600" }}>
