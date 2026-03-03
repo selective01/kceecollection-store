@@ -88,7 +88,7 @@ const Navbar = () => {
             left: 0,
             right: 0,
             background: "#fff",
-            borderRadius: 10,
+            borderRadius: 5,
             boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
             zIndex: 9999,
             overflow: "hidden",
@@ -117,7 +117,7 @@ const Navbar = () => {
                 >
                   {product.image && (
                     <img src={product.image} alt={product.name} style={{
-                      width: 40, height: 40, objectFit: "cover", borderRadius: 6, flexShrink: 0,
+                      width: 40, height: 40, objectFit: "cover", borderRadius: 3, flexShrink: 0,
                     }} />
                   )}
                   <div>
@@ -170,7 +170,7 @@ const Navbar = () => {
               <div style={{ position: "absolute", top: "calc(100% + 10px)", right: -20, background: "#fff", boxShadow: "0 8px 30px rgba(0,0,0,0.15)", minWidth: "210px", zIndex: 9999, overflow: "hidden" }}>
                 <div style={{ padding: "14px 16px", background: "#f8fafc", borderBottom: "1px solid #f1f5f9" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <span style={{ width: "36px", height: "36px", background: "#3A9D23", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px", fontWeight: "700", flexShrink: 0 }}>{initial}</span>
+                    <span style={{ width: "36px", height: "36px", borderRadius: "50%", background: "#3A9D23", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "15px", fontWeight: "700", flexShrink: 0 }}>{initial}</span>
                     <div>
                       <div style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a" }}>{user?.name || "User"}</div>
                       <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>{user?.email || ""}</div>
