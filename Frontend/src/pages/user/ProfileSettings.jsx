@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
+import UserDropdown from "../../components/UserDropdown";
 import "../../assets/css/profileSettings.css";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -83,7 +84,7 @@ export default function ProfileSettings() {
             <h1 className="ps-title">Profile Settings</h1>
             <p className="ps-sub">Manage your account details</p>
           </div>
-          <Link to="/dashboard" className="ps-back">← Back to Dashboard</Link>
+          <UserDropdown />
         </div>
 
         {/* Avatar Card */}

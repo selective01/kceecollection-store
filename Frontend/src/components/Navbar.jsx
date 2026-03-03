@@ -80,53 +80,29 @@ const Navbar = () => {
           <span className="voice-icon" ref={voiceIconRef} role="button" aria-label="Voice search">🎙️</span>
         </div>
 
-        {/* Search Results Dropdown */}
         {showDropdown && (
           <div ref={searchDropdownRef} style={{
-            position: "absolute",
-            top: "calc(100% + 8px)",
-            left: 0,
-            right: 0,
-            background: "#fff",
-            borderRadius: 5,
-            boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
-            zIndex: 9999,
-            overflow: "hidden",
-            minWidth: 280,
+            position: "absolute", top: "calc(100% + 8px)", left: 0, right: 0,
+            background: "#fff", borderRadius: 5, boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
+            zIndex: 9999, overflow: "hidden", minWidth: 280,
           }}>
             {searching ? (
-              <div style={{ padding: "12px 16px", fontSize: "0.85rem", color: "#9ca3af" }}>
-                Searching...
-              </div>
+              <div style={{ padding: "12px 16px", fontSize: "0.85rem", color: "#9ca3af" }}>Searching...</div>
             ) : (
               results.map((product) => (
                 <div
                   key={product._id}
                   onClick={() => handleResultClick(product)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 12,
-                    padding: "10px 14px",
-                    cursor: "pointer",
-                    borderBottom: "1px solid #f1f5f9",
-                    transition: "background 0.15s",
-                  }}
+                  style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", cursor: "pointer", borderBottom: "1px solid #f1f5f9", transition: "background 0.15s" }}
                   onMouseEnter={(e) => e.currentTarget.style.background = "#f8fafc"}
                   onMouseLeave={(e) => e.currentTarget.style.background = "#fff"}
                 >
                   {product.image && (
-                    <img src={product.image} alt={product.name} style={{
-                      width: 40, height: 40, objectFit: "cover", borderRadius: 3, flexShrink: 0,
-                    }} />
+                    <img src={product.image} alt={product.name} style={{ width: 40, height: 40, objectFit: "cover", borderRadius: 3, flexShrink: 0 }} />
                   )}
                   <div>
-                    <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#0f172a" }}>
-                      {product.name}
-                    </div>
-                    <div style={{ fontSize: "0.75rem", color: "#9ca3af" }}>
-                      {product.category} · ₦{product.price.toLocaleString()}
-                    </div>
+                    <div style={{ fontSize: "0.85rem", fontWeight: 600, color: "#0f172a" }}>{product.name}</div>
+                    <div style={{ fontSize: "0.75rem", color: "#9ca3af" }}>{product.category} · ₦{product.price.toLocaleString()}</div>
                   </div>
                 </div>
               ))
@@ -160,9 +136,7 @@ const Navbar = () => {
               <span style={{ width: "30px", height: "30px", borderRadius: "50%", background: "#3A9D23", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "700", flexShrink: 0 }}>
                 {initial}
               </span>
-              <span className="menu-text" style={{ color: "#3A9D23", fontWeight: "600" }}>
-                {firstName}
-              </span>
+              <span className="menu-text" style={{ color: "#3A9D23", fontWeight: "600" }}>{firstName}</span>
               <i className="fa-solid fa-chevron-down" style={{ fontSize: "10px", color: "#3A9D23", transform: dropdownOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.2s ease" }}></i>
             </button>
 
@@ -179,6 +153,7 @@ const Navbar = () => {
                 </div>
 
                 {[
+                  { to: "/", icon: "fa-house", label: "Home" },
                   { to: "/dashboard", icon: "fa-gauge", label: "Dashboard" },
                   { to: "/orders", icon: "fa-box", label: "My Orders" },
                   { to: "/profile", icon: "fa-user-pen", label: "Profile Settings" },

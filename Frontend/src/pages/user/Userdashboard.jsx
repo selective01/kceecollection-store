@@ -2,195 +2,187 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
-import "../../assets/css/userdashboard.css";
+import UserDropdown from "../../components/UserDropdown";
+import "../../assets/css/profileSettings.css";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
-export default function UserDashboard() {
+export default function ProfileSettings() {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
-  const [orders, setOrders] = useState([]);
-  const [ordersLoading, setOrdersLoading] = useState(true);
+
+  const [profileData, setProfileData] = useState({ name: "", email: "", phone: "" });
+  const [profileMsg, setProfileMsg] = useState({ type: "", text: "" });
+  const [profileLoading, setProfileLoading] = useState(false);
+
+  const [pwData, setPwData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" });
+  const [pwMsg, setPwMsg] = useState({ type: "", text: "" });
+  const [pwLoading, setPwLoading] = useState(false);
+  const [showPw, setShowPw] = useState({ current: false, new: false, confirm: false });
 
   useEffect(() => {
     if (loading) return;
     if (!user) { navigate("/auth"); return; }
+    setProfileData({ name: user.name || "", email: user.email || "", phone: user.phone || "" });
+  }, [user, loading, navigate]);
 
-    fetchOrders();
-
-    const interval = setInterval(fetchOrders, 30000);
-    return () => clearInterval(interval);
-  }, [user, loading]);
-  
-  const fetchOrders = async () => {
+  const handleProfileUpdate = async (e) => {
+    e.preventDefault();
     try {
+      setProfileLoading(true);
+      setProfileMsg({ type: "", text: "" });
       const token = localStorage.getItem("token");
-      const res = await axios.get(`${BASE_URL}/api/orders/my`, {
+      await axios.put(`${BASE_URL}/api/auth/update-profile`, profileData, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setOrders(res.data);
+      setProfileMsg({ type: "success", text: "Profile updated successfully!" });
     } catch (err) {
-      console.error("Failed to fetch orders:", err);
+      setProfileMsg({ type: "error", text: err.response?.data?.msg || "Failed to update profile" });
     } finally {
-      setOrdersLoading(false);
+      setProfileLoading(false);
     }
   };
 
-  const totalSpent = orders.reduce((sum, o) => sum + (o.totalPrice || 0), 0);
-  const lastOrder = orders[0];
-  const recentOrders = orders.slice(0, 5);
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    if (pwData.newPassword !== pwData.confirmPassword) {
+      setPwMsg({ type: "error", text: "New passwords do not match" });
+      return;
+    }
+    if (pwData.newPassword.length < 6) {
+      setPwMsg({ type: "error", text: "Password must be at least 6 characters" });
+      return;
+    }
+    try {
+      setPwLoading(true);
+      setPwMsg({ type: "", text: "" });
+      const token = localStorage.getItem("token");
+      await axios.put(`${BASE_URL}/api/auth/change-password`,
+        { currentPassword: pwData.currentPassword, newPassword: pwData.newPassword },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setPwMsg({ type: "success", text: "Password changed successfully!" });
+      setPwData({ currentPassword: "", newPassword: "", confirmPassword: "" });
+    } catch (err) {
+      setPwMsg({ type: "error", text: err.response?.data?.msg || "Failed to change password" });
+    } finally {
+      setPwLoading(false);
+    }
+  };
 
-  const formatDate = (date) => new Date(date).toLocaleDateString("en-GB", {
-    day: "2-digit", month: "short", year: "numeric"
-  });
-
+  const initial = user?.name ? user.name.charAt(0).toUpperCase() : "U";
   const memberSince = user?.createdAt
     ? new Date(user.createdAt).toLocaleDateString("en-GB", { month: "long", year: "numeric" })
-    : "N/A";
+    : "";
 
   return (
     <>
-      <div className="ud-wrap">
+      <div className="ps-wrap">
 
-        {/* Header */}
-        <div className="ud-header">
+        <div className="ps-header">
           <div>
-            <h1 className="ud-welcome">Welcome back, {user?.name?.split(" ")[0] || "User"}</h1>
-            <p className="ud-subtext">Here's a summary of your account activity</p>
+            <h1 className="ps-title">Profile Settings</h1>
+            <p className="ps-sub">Manage your account details</p>
           </div>
-          <Link to="/" title="Homepage" style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            width: 38, height: 38, borderRadius: "50%",
-            background: "#f0fdf4", color: "#3A9D23",
-            textDecoration: "none", transition: "background 0.2s",
-          }}
-            onMouseEnter={(e) => e.currentTarget.style.background = "#dcfce7"}
-            onMouseLeave={(e) => e.currentTarget.style.background = "#f0fdf4"}
-          >
-            <i className="fa-solid fa-house" style={{ fontSize: 15 }}></i>
-          </Link>
+          <UserDropdown />
         </div>
 
-        {/* Stats */}
-        <div className="ud-stats">
-          <div className="ud-stat-card">
-            <div className="ud-stat-icon green"><i className="fa-solid fa-box"></i></div>
+        {/* Avatar Card */}
+        <div className="ps-card" style={{ marginBottom: "24px" }}>
+          <div className="ps-avatar-section">
+            <div className="ps-avatar">{initial}</div>
             <div>
-              <div className="ud-stat-value">{orders.length}</div>
-              <div className="ud-stat-label">Total Orders</div>
-            </div>
-          </div>
-          <div className="ud-stat-card">
-            <div className="ud-stat-icon blue"><i className="fa-solid fa-naira-sign"></i></div>
-            <div>
-              <div className="ud-stat-value">₦{totalSpent.toLocaleString()}</div>
-              <div className="ud-stat-label">Total Spent</div>
-            </div>
-          </div>
-          <div className="ud-stat-card">
-            <div className="ud-stat-icon orange"><i className="fa-solid fa-truck"></i></div>
-            <div>
-              <div className="ud-stat-value" style={{ fontSize: "0.95rem" }}>
-                {lastOrder ? lastOrder.status || "Pending" : "—"}
-              </div>
-              <div className="ud-stat-label">Last Order Status</div>
-            </div>
-          </div>
-          <div className="ud-stat-card">
-            <div className="ud-stat-icon purple"><i className="fa-solid fa-calendar"></i></div>
-            <div>
-              <div className="ud-stat-value" style={{ fontSize: "0.9rem" }}>{memberSince}</div>
-              <div className="ud-stat-label">Member Since</div>
+              <div className="ps-avatar-name">{user?.name || "User"}</div>
+              <div className="ps-avatar-email">{user?.email || ""}</div>
+              {memberSince && <div className="ps-avatar-member">Member since {memberSince}</div>}
             </div>
           </div>
         </div>
 
-        {/* Main Grid */}
-        <div className="ud-grid">
+        <div className="ps-grid">
 
-          {/* Recent Orders */}
-          <div className="ud-card">
-            <div className="ud-card-header">
-              <h2 className="ud-card-title">Recent Orders</h2>
-              <Link to="/orders" className="ud-view-all">View all →</Link>
-            </div>
-            {ordersLoading ? (
-              <div className="ud-empty">Loading orders...</div>
-            ) : recentOrders.length === 0 ? (
-              <div className="ud-empty">
-                <i className="fa-solid fa-box-open" style={{ fontSize: "2rem", marginBottom: "8px", display: "block", color: "#d1d5db" }}></i>
-                No orders yet. <Link to="/" style={{ color: "#3A9D23" }}>Start shopping</Link>
+          {/* Update Profile */}
+          <div className="ps-card">
+            <div className="ps-card-header">
+              <div className="ps-card-icon blue"><i className="fa-solid fa-user-pen"></i></div>
+              <div>
+                <div className="ps-card-title">Personal Information</div>
+                <div className="ps-card-desc">Update your name, email and phone</div>
               </div>
-            ) : (
-              recentOrders.map((order) => (
-                <div className="ud-order-row" key={order._id}>
-                  <div>
-                    <div className="ud-order-ref">#{order.reference || order._id?.slice(-8).toUpperCase()}</div>
-                    <div className="ud-order-date">{formatDate(order.createdAt)}</div>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <span className={`ud-badge ${order.paymentStatus?.toLowerCase() === "paid" ? "paid" : "pending"}`}>
-                      {order.paymentStatus || "Pending"}
-                    </span>
-                    <span className={`ud-badge ${order.status?.toLowerCase() || "pending"}`}>
-                      {order.status || "Pending"}
-                    </span>
-                    <span className="ud-order-amount">₦{(order.totalPrice || 0).toLocaleString()}</span>
-                  </div>
+            </div>
+            <div className="ps-card-body">
+              {profileMsg.text && (
+                <div className={`ps-alert ${profileMsg.type}`}>{profileMsg.text}</div>
+              )}
+              <form onSubmit={handleProfileUpdate}>
+                <div className="ps-field">
+                  <label className="ps-label">Full Name</label>
+                  <input className="ps-input" type="text" placeholder="Your full name"
+                    value={profileData.name}
+                    onChange={(e) => setProfileData({ ...profileData, name: e.target.value })} />
                 </div>
-              ))
-            )}
+                <div className="ps-field">
+                  <label className="ps-label">Email Address</label>
+                  <input className="ps-input" type="email" placeholder="Your email"
+                    value={profileData.email}
+                    onChange={(e) => setProfileData({ ...profileData, email: e.target.value })} />
+                </div>
+                <div className="ps-field">
+                  <label className="ps-label">Phone Number</label>
+                  <input className="ps-input" type="text" placeholder="Your phone number"
+                    value={profileData.phone}
+                    onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })} />
+                </div>
+                <button type="submit" className="ps-btn green" disabled={profileLoading}>
+                  {profileLoading ? "Saving..." : "Save Changes"}
+                </button>
+              </form>
+            </div>
           </div>
 
-          {/* Right Column */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-
-            {/* Quick Links */}
-            <div className="ud-card">
-              <div className="ud-card-header">
-                <h2 className="ud-card-title">Quick Links</h2>
-              </div>
-              <div className="ud-quick-links">
-                <Link to="/orders" className="ud-quick-link">
-                  <i className="fa-solid fa-box green"></i> My Orders
-                </Link>
-                <Link to="/profile" className="ud-quick-link">
-                  <i className="fa-solid fa-user-pen blue"></i> Edit Profile
-                </Link>
-                <Link to="/" className="ud-quick-link">
-                  <i className="fa-solid fa-shop orange"></i> Continue Shopping
-                </Link>
+          {/* Change Password */}
+          <div className="ps-card">
+            <div className="ps-card-header">
+              <div className="ps-card-icon orange"><i className="fa-solid fa-lock"></i></div>
+              <div>
+                <div className="ps-card-title">Change Password</div>
+                <div className="ps-card-desc">Keep your account secure</div>
               </div>
             </div>
-
-            {/* Account Info */}
-            <div className="ud-card">
-              <div className="ud-card-header">
-                <h2 className="ud-card-title">Account Info</h2>
-              </div>
-              <div className="ud-account-info">
-                <div className="ud-info-row">
-                  <span className="ud-info-label">Name</span>
-                  <span className="ud-info-value">{user?.name || "—"}</span>
-                </div>
-                <div className="ud-info-row">
-                  <span className="ud-info-label">Email</span>
-                  <span className="ud-info-value" style={{ fontSize: "0.78rem" }}>{user?.email || "—"}</span>
-                </div>
-                <div className="ud-info-row">
-                  <span className="ud-info-label">Status</span>
-                  <span className="ud-info-value">
-                    <span className="ud-status-dot"></span>Active
-                  </span>
-                </div>
-                <div className="ud-info-row">
-                  <span className="ud-info-label">Member Since</span>
-                  <span className="ud-info-value">{memberSince}</span>
-                </div>
-              </div>
+            <div className="ps-card-body">
+              {pwMsg.text && (
+                <div className={`ps-alert ${pwMsg.type}`}>{pwMsg.text}</div>
+              )}
+              <form onSubmit={handlePasswordChange}>
+                {[
+                  { key: "currentPassword", label: "Current Password", show: showPw.current, toggle: () => setShowPw(p => ({ ...p, current: !p.current })) },
+                  { key: "newPassword", label: "New Password", show: showPw.new, toggle: () => setShowPw(p => ({ ...p, new: !p.new })) },
+                  { key: "confirmPassword", label: "Confirm New Password", show: showPw.confirm, toggle: () => setShowPw(p => ({ ...p, confirm: !p.confirm })) },
+                ].map(({ key, label, show, toggle }) => (
+                  <div className="ps-field" key={key}>
+                    <label className="ps-label">{label}</label>
+                    <div className="ps-pw-wrap">
+                      <input
+                        className="ps-input"
+                        type={show ? "text" : "password"}
+                        placeholder="••••••••"
+                        value={pwData[key]}
+                        style={{ paddingRight: "40px" }}
+                        onChange={(e) => setPwData({ ...pwData, [key]: e.target.value })}
+                      />
+                      <button type="button" className="ps-pw-toggle" onClick={toggle}>
+                        <i className={`fa-solid ${show ? "fa-eye-slash" : "fa-eye"}`}></i>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                <button type="submit" className="ps-btn green" disabled={pwLoading}>
+                  {pwLoading ? "Updating..." : "Update Password"}
+                </button>
+              </form>
             </div>
-
           </div>
+
         </div>
       </div>
     </>

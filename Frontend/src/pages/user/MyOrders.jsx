@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
+import UserDropdown from "../../components/UserDropdown";
 import "../../assets/css/myorders.css";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
@@ -22,7 +23,7 @@ export default function MyOrders() {
 
     const interval = setInterval(fetchOrders, 30000);
     return () => clearInterval(interval);
-  }, [user, loading]);
+  }, [user, loading, navigate]);
 
   const fetchOrders = async () => {
     try {
@@ -69,7 +70,7 @@ export default function MyOrders() {
               {orders.length} order{orders.length !== 1 ? "s" : ""} total
             </p>
           </div>
-          <Link to="/dashboard" className="mo-back">← Back to Dashboard</Link>
+          <UserDropdown />
         </div>
 
         {/* Search */}
