@@ -44,7 +44,7 @@ export default function AdminLogin() {
                 <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
               </svg>
             </div>
-            <h1>KCEE Admin</h1>
+            <h1>KCEECOLLECTION</h1>
             <p>Sign in to access your dashboard</p>
           </div>
 

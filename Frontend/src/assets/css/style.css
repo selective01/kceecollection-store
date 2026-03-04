@@ -83,8 +83,8 @@ body {
 }
 .nav .brand img {
   position: absolute;
-  top: -4px;
-  right: 2px;
+  top: -2px;
+  right:3px;
   transform: rotate(45deg);
 }
 

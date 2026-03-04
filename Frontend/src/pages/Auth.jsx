@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import "../assets/css/auth.css";
-import logo from "../assets/My_Collections/Logo/Kceecollection_Logo2.jpeg";
+import crown from "../assets/Icons/crown.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import SEO from "../components/SEO";
@@ -112,7 +112,11 @@ function Auth() {
 
         {/* OVERLAY */}
         <div className="overlay">
-          <div className="auth-brand"><img src={logo} alt="Kcee Collection Logo" /></div>
+          <div to="/" className="auth-brand">
+            <h1>KceeCollection</h1>
+            <img src={crown} alt="Kceecollection Crown Icon" className="crown"
+              style={{ width: "20px", height: "20px" }} />
+          </div>
           <div className="overlay-panel overlay-right">
             <h2>New Here?</h2>
             <p>Create an account to start shopping.</p>
