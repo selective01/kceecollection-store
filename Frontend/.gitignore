@@ -2,7 +2,7 @@
 .env
 frontend/.env
 backend/.env
-
+.zip
 # Node modules
 node_modules/
 dist/

@@ -1,11 +1,42 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import "../assets/css/adminSidebar.css"
+import { useAuth } from "../context/useAuth";
+import { useEffect, useState } from "react";
+import "../assets/css/adminSidebar.css";
+
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function AdminSidebar() {
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigate  = useNavigate();
   const { user, logout } = useAuth();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  // Poll unread message count every 60 seconds
+  // Clear badge immediately when on the messages page
+  useEffect(() => {
+    const fetchUnread = async () => {
+      try {
+        // If already on messages page, just clear and skip the fetch
+        if (location.pathname.startsWith("/admin/messages")) {
+          setUnreadCount(0);
+          return;
+        }
+        const token = localStorage.getItem("token");
+        if (!token) return;
+        const res = await fetch(`${BASE_URL}/api/messages/unread-count`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setUnreadCount(data.count || 0);
+        }
+      } catch { /* silent */ }
+    };
+
+    fetchUnread();
+    const interval = setInterval(fetchUnread, 60000);
+    return () => clearInterval(interval);
+  }, [location.pathname]);
 
   const isActive = (path) =>
     path === "/admin"
@@ -92,50 +123,95 @@ export default function AdminSidebar() {
     },
   ];
 
+  const toolItems = [
+    {
+      to: "/admin/inventory",
+      label: "Inventory",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+        </svg>
+      ),
+    },
+    {
+      to: "/admin/coupons",
+      label: "Coupons",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58s1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41s-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+        </svg>
+      ),
+    },
+    {
+      to: "/admin/messages",
+      label: "Messages",
+      badge: unreadCount,
+      icon: (
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/>
+        </svg>
+      ),
+    },
+  ];
+
   return (
-    <>
-      <div className="kcee-sidebar">
-        {/* Brand */}
-        <div className="sidebar-brand">KCEECOLLECTION</div>
+    <div className="kcee-sidebar">
+      {/* Brand */}
+      <div className="sidebar-brand">Kcee_Collection</div>
 
-        {/* User info */}
-        <div className="sidebar-user">
-          <div className="sidebar-avatar">
-            {user?.name?.charAt(0)?.toUpperCase() || "A"}
-          </div>
-          <div className="sidebar-user-info">
-            <div className="name">{user?.name || "Admin"}</div>
-            <div className="status">Online</div>
-          </div>
+      {/* User info */}
+      <div className="sidebar-user">
+        <div className="sidebar-avatar">
+          {user?.name?.charAt(0)?.toUpperCase() || "A"}
         </div>
-
-        {/* Nav */}
-        <nav className="sidebar-nav">
-          <div className="sidebar-nav-label">Main Navigation</div>
-
-          {navItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={`sidebar-link ${isActive(item.to) ? "active" : ""}`}
-            >
-              {item.icon}
-              {item.label}
-            </Link>
-          ))}
-
-          {/* Spacer */}
-          <div style={{ flex: 1 }} />
-
-          {/* Logout */}
-          <button className="sidebar-logout" onClick={handleLogout}>
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
-            </svg>
-            Logout
-          </button>
-        </nav>
+        <div className="sidebar-user-info">
+          <div className="name">{user?.name || "Admin"}</div>
+          <div className="status">Online</div>
+        </div>
       </div>
-    </>
+
+      {/* Nav */}
+      <nav className="sidebar-nav">
+        <div className="sidebar-nav-label">Main Navigation</div>
+
+        {navItems.map((item) => (
+          <Link
+            key={item.to}
+            to={item.to}
+            className={`sidebar-link ${isActive(item.to) ? "active" : ""}`}
+          >
+            {item.icon}
+            {item.label}
+          </Link>
+        ))}
+
+        {/* Tools section */}
+        <div className="sidebar-nav-label" style={{ marginTop: "8px" }}>Tools</div>
+
+        {toolItems.map((item) => (
+          <Link
+            key={item.to}
+            to={item.to}
+            className={`sidebar-link ${isActive(item.to) ? "active" : ""}`}
+          >
+            {item.icon}
+            {item.label}
+            {item.badge > 0 && (
+              <span className="sidebar-unread-badge">{item.badge}</span>
+            )}
+          </Link>
+        ))}
+
+        <div style={{ flex: 1 }} />
+
+        {/* Logout */}
+        <button className="sidebar-logout" onClick={handleLogout}>
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+          </svg>
+          Logout
+        </button>
+      </nav>
+    </div>
   );
 }

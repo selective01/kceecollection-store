@@ -1,4 +1,6 @@
+// HomeComponent.jsx — Updated with TrustBadges section
 import Hero from "../components/Hero";
+import TrustBadges from "../components/TrustBadges";
 import NewArrivals from "../components/NewArrivals";
 import Categories from "../components/Categories";
 import Testimonials from "../components/Testimonial";
@@ -10,10 +12,11 @@ export default function Home() {
       <SEO
         title="Home"
         description="Shop the latest fashion collections at Kcee Collection — hoodies, jeans, shoes, jerseys and more."
-        image="https://kceecollection.com/og-image.jpg"
-        url="https://kceecollection.com/"
+        image="https://Kcee_Collection.com/og-image.jpg"
+        url="https://Kcee_Collection.com/"
       />
       <Hero />
+      <TrustBadges />
       <NewArrivals />
       <Categories />
       <Testimonials />

@@ -1,0 +1,75 @@
+/* trustbadges.css */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+.trust-section {
+  padding: 40px 5%;
+  background: #fff;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.trust-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 20px;
+  border: 1.5px solid #f1f5f9;
+  border-radius: 14px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.trust-card:hover {
+  border-color: #dcfce7;
+  box-shadow: 0 4px 20px rgba(58,157,35,0.08);
+  transform: translateY(-2px);
+}
+
+.trust-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: #f0fdf4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.trust-icon {
+  font-size: 22px;
+}
+
+.trust-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 3px;
+}
+
+.trust-sub {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .trust-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .trust-section { padding: 28px 4%; }
+  .trust-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .trust-card { padding: 16px 12px; gap: 10px; }
+  .trust-icon-wrap { width: 42px; height: 42px; }
+  .trust-icon { font-size: 18px; }
+  .trust-title { font-size: 0.82rem; }
+  .trust-sub { font-size: 0.7rem; }
+}

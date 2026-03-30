@@ -1,0 +1,247 @@
+/* wishlist.css — Jumia-style boxed layout */
+
+/* ─── SHELL (sits inside the white box from UserLayout) ─── */
+.wl-shell {
+  padding: 28px 28px 36px;
+  min-height: 420px;
+}
+
+/* ─── HEADER ─── */
+.wl-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.wl-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #bbb;
+  margin: 0 0 4px;
+}
+.wl-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--black-color, #111);
+  margin: 0;
+}
+.wl-count {
+  font-size: 13px;
+  color: #888;
+  background: #f3f3f3;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+/* ─── GRID ─── */
+.wl-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+/* ─── CARD ─── */
+.wl-card {
+  position: relative;
+  border: 1px solid #ebebeb;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.wl-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+/* Heart */
+.wl-heart-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s;
+}
+.wl-heart-btn:hover { transform: scale(1.12); }
+.wl-heart-active i { color: #e53935; }
+
+/* Image wrap */
+.wl-card-img-wrap {
+  display: block;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f8f8f8;
+}
+.wl-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.wl-card:hover .wl-img { transform: scale(1.04); }
+
+/* Out of stock badge */
+.wl-out-badge {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 0;
+  letter-spacing: .04em;
+}
+
+/* Card body */
+.wl-card-body {
+  padding: 12px 14px 14px;
+}
+.wl-card-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--black-color, #111);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wl-card-name:hover { color: var(--design-color, #000); }
+.wl-card-cat {
+  font-size: 11px;
+  color: #aaa;
+  margin: 0 0 10px;
+}
+
+/* Footer row */
+.wl-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.wl-card-price {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--design-color, #111);
+}
+
+/* Add to cart / Login button */
+.wl-add-btn {
+  background: var(--design-color, #111);
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 7px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.wl-add-btn:hover { opacity: 0.85; }
+
+.wl-sold-out {
+  font-size: 11px;
+  color: #aaa;
+  font-weight: 500;
+}
+
+/* ─── EMPTY STATE ─── */
+.wl-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+.wl-empty-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--design-color, #111);
+  margin-bottom: 20px;
+}
+.wl-empty h2 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--black-color, #111);
+  margin: 0 0 8px;
+}
+.wl-empty p {
+  font-size: 13.5px;
+  color: #888;
+  margin: 0 0 24px;
+  max-width: 300px;
+}
+.wl-shop-btn {
+  background: var(--design-color, #111);
+  color: #fff;
+  text-decoration: none;
+  padding: 11px 28px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  transition: opacity 0.15s;
+}
+.wl-shop-btn:hover { opacity: 0.85; }
+
+/* ─── SKELETONS ─── */
+.wl-skeleton-img {
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: wl-shimmer 1.4s infinite;
+}
+.wl-skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: wl-shimmer 1.4s infinite;
+}
+@keyframes wl-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  .wl-shell { padding: 20px 16px 28px; }
+  .wl-grid  { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+}
+@media (max-width: 400px) {
+  .wl-grid { grid-template-columns: 1fr 1fr; }
+}

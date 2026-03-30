@@ -1,96 +1,112 @@
+// NewArrivals.jsx — uses shared global cache
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import axios from "axios";
-
+import { fetchNewArrivals } from "../utils/productCache";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "../assets/css/newarrivals.css";
 
-const BASE_URL = import.meta.env.VITE_API_URL;
+function SkeletonCard() {
+  return (
+    <div className="na-card">
+      <div className="na-card-img-wrap">
+        <div className="na-skeleton-img" />
+      </div>
+      <div className="na-card-body">
+        <div className="na-skeleton-line" style={{ width: "60%", height: 14 }} />
+        <div className="na-skeleton-line" style={{ width: "35%", height: 14, marginTop: 6 }} />
+      </div>
+    </div>
+  );
+}
 
 const NewArrivals = () => {
   const navigate = useNavigate();
-  const [newArrivals, setNewArrivals] = useState([]);
+  const [items,   setItems]   = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchArrivals = async () => {
-      try {
-        const res = await axios.get(`${BASE_URL}/api/newarrivals`);
-        setNewArrivals(res.data);
-      } catch (err) {
-        console.error("Failed to fetch new arrivals:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchArrivals();
+    let cancelled = false;
+    fetchNewArrivals()
+      .then((data) => { if (!cancelled) { setItems(data); setLoading(false); } })
+      .catch(()    => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
   }, []);
 
-  if (loading) return (
-    <section className="premium-arrivals">
-      <div className="section-header">
-        <h2>New Arrivals</h2>
-        <p>Latest drops from our streetwear collection</p>
-      </div>
-      <div style={{ display: "flex", gap: 16, padding: "0 20px" }}>
-        {[1, 2, 3].map((i) => (
-          <div key={i} style={{
-            flex: 1, borderRadius: 12, overflow: "hidden",
-            background: "#f1f5f9", height: 320, animation: "pulse 1.5s infinite"
-          }} />
-        ))}
-      </div>
-    </section>
-  );
-  if (newArrivals.length === 0) return null;
+  if (!loading && !items.length) return null;
 
   return (
-    <section className="premium-arrivals">
-      <div className="section-header">
-        <h2>New Arrivals</h2>
-        <p>Latest drops from our streetwear collection</p>
+    <section className="na-section">
+      <div className="na-header">
+        <div>
+          <p className="na-eyebrow">Just dropped</p>
+          <h2 className="na-title">New Arrivals</h2>
+        </div>
+        <p className="na-sub">Latest drops from our streetwear collection</p>
       </div>
 
-      <Swiper
-        modules={[Navigation, Pagination]}
-        spaceBetween={10}
-        slidesPerView={3}
-        navigation={{ nextEl: ".custom-next", prevEl: ".custom-prev" }}
-        pagination={{ clickable: true }}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        }}
-      >
-        {newArrivals.map((item) => (
-          <SwiperSlide key={item._id}>
-            <div className="premium-card">
-              <div className="image-wrapper">
-                <span className="badge">NEW</span>
-                <img src={item.img1} alt={item.title} className="product-img primary" />
-                {item.img2 && (
-                  <img src={item.img2} alt={item.title} className="product-img secondary" />
-                )}
-              </div>
-              <div className="card-info">
-                <h3>{item.title}</h3>
-                <p className="price">₦{Number(item.price).toLocaleString()}</p>
-                <button className="view-product-btn" onClick={() => navigate(item.href)}>
-                  View Product
-                </button>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      <div className="na-swiper-wrap">
+        <Swiper
+          modules={[Navigation, Pagination]}
+          spaceBetween={20}
+          slidesPerView={3}
+          navigation={{ nextEl: ".na-next", prevEl: ".na-prev" }}
+          pagination={{ clickable: true, el: ".na-dots" }}
+          breakpoints={{
+            0:    { slidesPerView: 1.2 },
+            600:  { slidesPerView: 2.1 },
+            1024: { slidesPerView: 3 },
+          }}
+        >
+          {loading
+            ? [1, 2, 3].map((i) => <SwiperSlide key={i}><SkeletonCard /></SwiperSlide>)
+            : items.map((item) => (
+              <SwiperSlide key={item._id}>
+                <div className="na-card" onClick={() => navigate(item.href)}>
+                  <div className="na-rating">
+                    <span className="na-star">★</span> 4.9/5.0
+                  </div>
+                  <div className="na-card-img-wrap">
+                    <img
+                      src={item.img1}
+                      alt={item.title}
+                      className="na-img na-img-primary"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    {item.img2 && (
+                      <img
+                        src={item.img2}
+                        alt={item.title}
+                        className="na-img na-img-secondary"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    )}
+                    <button
+                      className="na-hover-cta"
+                      onClick={(e) => { e.stopPropagation(); navigate(item.href); }}
+                    >
+                      View Product &nbsp;→
+                    </button>
+                  </div>
+                  <div className="na-card-body">
+                    <p className="na-card-name">{item.title}</p>
+                    <p className="na-card-price">₦{Number(item.price).toLocaleString()}</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))
+          }
+        </Swiper>
 
-      <div className="custom-prev">&#10094;</div>
-      <div className="custom-next">&#10095;</div>
+        <button className="na-prev">&#8592;</button>
+        <button className="na-next">&#8594;</button>
+        <div className="na-dots" />
+      </div>
     </section>
   );
 };

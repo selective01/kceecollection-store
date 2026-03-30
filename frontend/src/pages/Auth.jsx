@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import "../assets/css/auth.css";
 import crown from "../assets/Icons/crown.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -63,8 +63,8 @@ function Auth() {
       <SEO
         title={isSignup ? "Create Account" : "Login"}
         description={isSignup ? "Create a Kcee Collection account to start shopping." : "Login to your Kcee Collection account."}
-        image="https://kceecollection.com/og-image.jpg"
-        url="https://kceecollection.com/auth"
+        image="https://Kcee_Collection.com/og-image.jpg"
+        url="https://Kcee_Collection.com/auth"
       />
       <div className={`auth-box ${isSignup ? "signup-active" : ""}`}>
 
@@ -113,8 +113,8 @@ function Auth() {
         {/* OVERLAY */}
         <div className="overlay">
           <div to="/" className="auth-brand">
-            <h1>KceeCollection</h1>
-            <img src={crown} alt="Kceecollection Crown Icon" className="crown"
+            <h1>Kcee_Collection</h1>
+            <img src={crown} alt="Kcee_Collection Crown Icon" className="crown"
               style={{ width: "20px", height: "20px" }} />
           </div>
           <div className="overlay-panel overlay-right">

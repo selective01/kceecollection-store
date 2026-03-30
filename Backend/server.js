@@ -14,6 +14,9 @@ import authRoutes from "./routes/authRoutes.js";
 import newArrivalRoutes from "./routes/newArrivalRoutes.js";
 import shippingRoutes from "./routes/shippingRoutes.js";
 import cartRoutes from "./routes/cartRoutes.js";
+import couponRoutes  from "./routes/couponRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
+import wishlistRoutes from "./routes/wishlistRoutes.js";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 connectDB();
@@ -46,6 +49,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/newarrivals", newArrivalRoutes);
 app.use("/api/shipping", shippingRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/coupons",  couponRoutes);
+app.use("/api/messages", messageRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 // Root test
 app.get("/", (req, res) => {

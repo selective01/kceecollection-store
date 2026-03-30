@@ -1,57 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
-:root {
-  --white-color: #ffffff;
-  --black-color: #0b0b0b;
-  --design-color: #3A9D23;       
-  --design-active-color: #27632A;  
-  --background-color: #F5F5DC;    
-  --red-color: #dc3545;          
-  --figcaption-color: #333;        
-  --hero-small-screen: 30px;
-  --hero-large-screen: 48px;
-  --font-small-screen: 12px;
-  --font-large-screen: 16px;
-  --grid-column-small-screen: 1fr 1fr;
-  --grid-column-medium-screen: repeat(3, 1fr);
-  --grid-column-large-screen: repeat(4, 1fr);
-  --accent-primary: #3A9D23;  
-  --accent-soft: #A58C69;
-  --Goldenrod: #FFDF00;    
-}
+/* breadcrumb.css */
 
 .breadcrumb-container {
+  background: var(--background-color, #f5f5f5);
+  border-bottom: 1px solid #ebebeb;
   padding: 10px 0;
-  text-align: center;
 }
 
 .breadcrumb {
-  font-family: 'Playfair Display', serif;
-  font-size: 14px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--accent-soft);
-  display: inline-flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
   align-items: center;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 2px;
+  font-size: 12.5px;
+  font-family: inherit;
 }
 
-.breadcrumb a {
+/* Home link + intermediate links */
+.breadcrumb > a,
+.breadcrumb-item a {
+  color: #888;
   text-decoration: none;
-  color: #999;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  transition: color 0.15s;
+  white-space: nowrap;
 }
 
-.breadcrumb a:hover {
-  color: #3A9D23; /* your brand green */
+.breadcrumb > a:hover,
+.breadcrumb-item a:hover {
+  color: var(--design-color, #111);
+}
+
+/* Separator icon */
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 
 .separator {
-  color: var(--accent-soft);
-  margin-right: 10px;
+  color: #ccc;
+  font-size: 10px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
 }
 
+/* Current (last) crumb */
 .current {
-  color: var(--design-color);
-  font-weight: 600;
-  padding-bottom: 2px;
+  color: var(--design-color, #111);
+  font-weight: 700;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-size: 11.5px;
+  letter-spacing: .05em;
+}
+
+@media (max-width: 480px) {
+  .breadcrumb { font-size: 11.5px; padding: 0 14px; }
 }

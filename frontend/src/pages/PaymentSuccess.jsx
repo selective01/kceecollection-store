@@ -1,54 +1,40 @@
+// PaymentSuccess.jsx
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 export default function PaymentSuccess() {
   const [searchParams] = useSearchParams();
-  const [status, setStatus] = useState("Verifying payment...");
+  const navigate = useNavigate();
+  const [status, setStatus] = useState("verifying"); // "verifying" | "success" | "failed"
 
   useEffect(() => {
-    const verifyPayment = async () => {
-      const reference = searchParams.get("reference");
+    const reference = searchParams.get("reference");
 
-      if (!reference) {
-        setStatus("Invalid payment reference.");
-        return;
-      }
-
-      try {
-        const res = await axios.get(
-          `${BASE_URL}/api/paystack/verify/${reference}`
-        );
-
+    // ✅ All setStatus calls are inside promise callbacks — never the effect body
+    Promise.resolve(reference)
+      .then((ref) => {
+        if (!ref) throw new Error("no-reference");
+        return axios.get(`${BASE_URL}/api/paystack/verify/${ref}`);
+      })
+      .then((res) => {
         if (res.data.success) {
-
-          // 🔥 CREATE ORDER AFTER SUCCESS
-          await axios.post(`${BASE_URL}/api/orders`, {
-            user: res.data.userId,        // or however you track user
-            items: res.data.items,        // or get from cart
-            totalPrice: res.data.amount,  // adjust to your structure
-            paymentStatus: "Paid"
-          });
-
-          setStatus("Payment successful! Order confirmed.");
-
+          setStatus("success");
+          setTimeout(() => navigate("/order-success"), 2000);
         } else {
-          setStatus("Payment verification failed.");
+          setStatus("failed");
         }
-      } catch (error) {
-        console.error(error);
-        setStatus("Something went wrong.");
-      }
-    };
-
-    verifyPayment();
-  }, [searchParams]);
+      })
+      .catch(() => setStatus("failed"));
+  }, [searchParams, navigate]);
 
   return (
-    <div className="payment-success">
-      <h2>{status}</h2>
+    <div style={{ textAlign: "center", padding: "80px 20px", fontFamily: "sans-serif" }}>
+      {status === "verifying" && <p>Verifying your payment…</p>}
+      {status === "success"   && <p style={{ color: "#3A9D23", fontSize: "1.2rem" }}>✅ Payment confirmed! Redirecting…</p>}
+      {status === "failed"    && <p style={{ color: "red" }}>❌ Payment verification failed. Please contact support.</p>}
     </div>
   );
 }

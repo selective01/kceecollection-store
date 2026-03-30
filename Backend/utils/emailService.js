@@ -34,7 +34,7 @@ export const sendOrderConfirmation = async (order) => {
       <div style="font-family:'DM Sans',sans-serif;max-width:600px;margin:auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08)">
         <div style="background:#3A9D23;padding:32px;text-align:center">
           <h1 style="color:#fff;margin:0;font-size:24px">Order Confirmed! 🎉</h1>
-          <p style="color:#dcfce7;margin:8px 0 0;font-size:14px">Thank you for shopping with KceeCollection</p>
+          <p style="color:#dcfce7;margin:8px 0 0;font-size:14px">Thank you for shopping with Kcee_Collection</p>
         </div>
         <div style="padding:32px">
           <p style="color:#374151;font-size:15px">Hi <strong>${order.customer?.fullName || "Customer"}</strong>,</p>
@@ -63,7 +63,7 @@ export const sendOrderConfirmation = async (order) => {
           <p style="color:#6b7280;font-size:13px">You'll receive another email when your order ships. For any questions, contact us at kceecollection01@gmail.com</p>
         </div>
         <div style="background:#f8fafc;padding:20px;text-align:center">
-          <p style="margin:0;font-size:12px;color:#9ca3af">© KceeCollection • Bold Urban Fashion</p>
+          <p style="margin:0;font-size:12px;color:#9ca3af">© Kcee_Collection • Bold Urban Fashion</p>
         </div>
       </div>
     `,
@@ -93,7 +93,7 @@ export const sendPaymentConfirmation = async (order) => {
           <p style="color:#6b7280;font-size:13px">Your order is now being prepared. We'll notify you once it ships.</p>
         </div>
         <div style="background:#f8fafc;padding:20px;text-align:center">
-          <p style="margin:0;font-size:12px;color:#9ca3af">© KceeCollection • Bold Urban Fashion</p>
+          <p style="margin:0;font-size:12px;color:#9ca3af">© Kcee_Collection • Bold Urban Fashion</p>
         </div>
       </div>
     `,
@@ -135,10 +135,10 @@ export const sendStatusUpdate = async (order) => {
             <p style="margin:0 0 4px;font-size:12px;color:#9ca3af">Order Reference</p>
             <p style="margin:0;font-size:15px;font-weight:700;color:#0f172a">#${order.reference || order._id}</p>
           </div>
-          <p style="color:#6b7280;font-size:13px">For any questions, contact us at kceecollection01@gmail.com</p>
+          <p style="color:#6b7280;font-size:13px">For any questions, contact us at Kcee_Collection01@gmail.com</p>
         </div>
         <div style="background:#f8fafc;padding:20px;text-align:center">
-          <p style="margin:0;font-size:12px;color:#9ca3af">© KceeCollection • Bold Urban Fashion</p>
+          <p style="margin:0;font-size:12px;color:#9ca3af">© Kcee_Collection • Bold Urban Fashion</p>
         </div>
       </div>
     `,
@@ -188,7 +188,7 @@ export const sendAdminNewOrderAlert = async (order) => {
           </div>
         </div>
         <div style="background:#f8fafc;padding:20px;text-align:center">
-          <p style="margin:0;font-size:12px;color:#9ca3af">KceeCollection Admin Notification</p>
+          <p style="margin:0;font-size:12px;color:#9ca3af">Kcee_Collection Admin Notification</p>
         </div>
       </div>
     `,
@@ -215,7 +215,7 @@ export const sendLowStockAlert = async (product) => {
           </div>
         </div>
         <div style="background:#f8fafc;padding:20px;text-align:center">
-          <p style="margin:0;font-size:12px;color:#9ca3af">KceeCollection Admin Notification</p>
+          <p style="margin:0;font-size:12px;color:#9ca3af">Kcee_Collection Admin Notification</p>
         </div>
       </div>
     `,
@@ -247,7 +247,7 @@ export const sendAdminPaymentAlert = async (order) => {
           </div>
         </div>
         <div style="background:#f8fafc;padding:20px;text-align:center">
-          <p style="margin:0;font-size:12px;color:#9ca3af">KceeCollection Admin Notification</p>
+          <p style="margin:0;font-size:12px;color:#9ca3af">Kcee_Collection Admin Notification</p>
         </div>
       </div>
     `,

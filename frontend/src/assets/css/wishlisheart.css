@@ -1,0 +1,30 @@
+/* wishlisheart.css */
+.wh-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #9ca3af;
+  transition: transform 0.2s, color 0.2s, background 0.2s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.wh-btn:hover {
+  transform: scale(1.12);
+  color: #dc2626;
+  background: #fff;
+}
+
+.wh-btn-saved {
+  color: #dc2626;
+  background: #fff;
+}
+
+.wh-btn-saved:hover { background: #fee2e2; }

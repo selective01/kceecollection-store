@@ -6,11 +6,12 @@ export default function Breadcrumb() {
 
   const pathnames = location.pathname.split("/").filter((x) => x);
 
-  const formatName = (name) => {
-    return name
-      .replace("-", " ")
+  // ✅ Fixed: /g flag replaces ALL dashes, not just the first one
+  // e.g. "club-jersey" → "Club Jersey", "jean-shorts" → "Jean Shorts"
+  const formatName = (name) =>
+    name
+      .replace(/-/g, " ")
       .replace(/\b\w/g, (char) => char.toUpperCase());
-  };
 
   return (
     <div className="breadcrumb-container">
@@ -24,12 +25,10 @@ export default function Breadcrumb() {
           return (
             <span key={to} className="breadcrumb-item">
               <span className="separator">
-                <i className="fa-solid fa-angle-right"></i>
+                <i className="fa-solid fa-angle-right" />
               </span>
               {isLast ? (
-                <span className="current">
-                  {formatName(value)}
-                </span>
+                <span className="current">{formatName(value)}</span>
               ) : (
                 <Link to={to}>{formatName(value)}</Link>
               )}
